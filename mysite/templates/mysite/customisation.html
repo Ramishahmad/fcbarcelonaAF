@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MYX Dashboard</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- bootstrap -->
+    <link href="https://erwinagpasa.com/myxdashboard/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://erwinagpasa.com/myxdashboard/css/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
+
+    <!-- theme -->
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/theme/default.css" />
+
+    <!-- libraries -->
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/notify.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://erwinagpasa.com/myxdashboard/css/elements/bootstrap_calendar.css" />
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/pizza.css" />
+
+
+
+    <!-- open sans font -->
+    <link
+        href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css' />
+
+    <!--[if lt IE 9]>
+      <script src="js/html5.js"></script>
+    <![endif]-->
+    <script src="https://kit.fontawesome.com/4755752317.js" crossorigin="anonymous"></script>
+    <style>
+        .navbar-brand img.logo {
+            width: 10em !important;
+            height: 2em !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- navbar -->
+    <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" id="menu-toggler">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/dashboard"><img
+                    src="https://www.fcbarcelona.ir/index/themes/Barca 2016/images/Slogan.png" alt="logo"
+                    class="logo" /></a>
+        </div>
+
+    </header>
+    <!-- end navbar -->
+
+    <!-- sidebar -->
+    <div id="sidebar-nav">
+
+        <ul id="dashboard-menu">
+            <li>
+                <a href="/dashboard">
+                    <i class="fa fa-laptop"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+
+                <a href="/addpost">
+                    <i class="fa fa-pencil-square-o"></i>
+                    <span>Add Post</span>
+                </a>
+            </li>
+
+            <li>
+ 
+                <a href="/dashboard-slider">
+                    <i class="fa fa-table"></i>
+                    <span> Slider </span>
+                </a>
+            </li>
+
+
+
+            <li class="active">
+                <div class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a href="">
+                    <i class="fa fa-settings"></i>
+                    <span>Customize </span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <!-- end sidebar -->
+
+
+    <!-- main container -->
+    <div class="content">
+        <div id="pad-wrapper">
+
+
+            <!-- ORDER TABLE -->
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Slides</strong> <a href="#" class="pull-right"></a>
+                    </div>
+                    <div class="panel-body no-padding">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover table-users">
+
+
+                                <tbody>
+                                    {% for item in slide reversed %}
+                                    <tr>
+
+                                        <td>
+                                            <a href="{{ item.img_url }}" target="_blank_">{{item.name}}</a>
+                                        </td>
+
+                                        <td class="purchased"></td>
+                                        <td><span class="label label-success"> Published </span></td>
+                                        <td class="text-right">
+                                            <a class="btn" href="{% url 'update_slider' item.id %}"><i
+                                                    class="fa fa-pencil-square-o"></i></a>
+                                            <a href="#" class="confirm-delete btn" role="button"
+                                                data-title="{{item.name}}" data-id="{{item.id}}">
+
+                                                <i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- /ORDER TABLE -->
+
+            <div class="col-md-6">
+                <div class="panel panel-default post-wrap pro-box">
+                    <div class="panel-heading"><strong>{{addorupdate}}</strong></div>
+                    <form class="form-horizontal" method="POST" action=""
+                        style="padding: 5px !important; margin-top: 5px !important;">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">URL : </label>
+                            <div class="col-lg-8">
+                                <input type="text" name="img_url" maxlength="100" required id="id_title"
+                                    placeholder="Image URL" value="{{ s_img }}" data-required="true"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Name: </label>
+                            <div class="col-lg-8">
+                                <input type="text" name="name" maxlength="100" required id="id_title"
+                                    placeholder="Image Name" value="{{ s_name }}" data-required="true"
+                                    class="form-control">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-9 pull-right">
+                                <!-- <button type="cancel" class="btn btn-default">Cancel</button> -->
+                                <button type="submit" class="btn bg-primary">Save Changes</button>
+                                <a href="/dashboard-slider" class="btn" role="button"
+                                    style="color: white; background-color: rgba(81, 160, 81, 0.842);"> New
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
+                    <aside class="post-highlight based v-align">
+                        <div class="panel-body text-center">
+                            <div class="pro-thumb" style="height: 220px;">
+                                <img style="height: 200px !important; width: 200px !important;" src="{{ s_img }}"
+                                    alt="">
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+            <!-- /PRODUCT -->
+
+
+
+
+            <div class="clearfix"></div>
+            <footer id="footer">
+                <div class="text-center clearfix">
+                    <p><small>&copy Milestone Institute Alrights Reserved</small>
+                        <br /><br />
+                        <a href="#" class="btn btn-xs btn-circle btn-twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="btn btn-xs btn-circle btn-facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="btn btn-xs btn-circle btn-gplus"><i class="fa fa-google-plus"></i></a>
+                    </p>
+                </div>
+            </footer>
+
+
+        </div><!-- /pad-wrapper -->
+    </div><!-- content -->
+    <!-- /main container -->
+
+
+
+
+
+
+
+    <!-- scripts -->
+    <script src="https://erwinagpasa.com/myxdashboard/js/jquery.min.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/theme.js"></script>
+
+    <script src="https://erwinagpasa.com/myxdashboard/js/form/app.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/form/app.plugin.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/form/datepicker/bootstrap-datepicker.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/form/slider/bootstrap-slider.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/form/bootstrap.file-input.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/form/combodate/moment.min.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/form/combodate/combodate.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/form/parsley/parsley.min.js"></script>
+
+
+
+    <script src="https://erwinagpasa.com/myxdashboard/js/tables/jquery.peity.min.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/tables/peity-demo.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/tables/icheck.min.js"></script>
+
+    <!--wysiwyg editor -->
+    <script src="https://erwinagpasa.com/myxdashboard/js/editor/wysihtml5-0.3.0.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/editor/bootstrap3-wysihtml5.js"></script>
+
+
+    <!--post modal-->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4><strong>Delete Confirmation</strong></h4>
+                </div>
+
+                <div class="modal-body">
+                    <p>Are You sure to delete this record ?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button data-dismiss="modal" class="btn btn-danger btn-sm" id="btnYes"> Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //wysihtml5
+        $('.textarea').wysihtml5({
+            "font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
+            "emphasis": true, //Italics, bold, etc. Default true
+            "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+            "html": true, //Button which allows you to edit the generated HTML. Default false
+            "link": true, //Button to insert a link. Default true
+            "image": true, //Button to insert an image. Default true,
+            "color": false, //Button to change color of font
+            "size": 'sm' //Button size like sm, xs etc.
+        });
+
+
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+    <script>
+        $('#myModal').on('show', function () {
+            var tit = $('.confirm-delete').data('title');
+
+            //$('#myModal .modal-body p').html("Are you sure you want to delete this record " + '<b>' + tit +'</b>' + ' ?');
+            $('#myModal .modal-body p').html("Are you sure you want to delete this record?");
+            var id = $(this).data('id'),
+                removeBtn = $(this).find('.danger');
+        })
+
+        $('.confirm-delete').on('click', function (e) {
+            e.preventDefault();
+
+            var id = $(this).data('id');
+            $('#myModal').data('id', id).modal('show');
+        });
+
+        $('#btnYes').click(function () {
+            // handle deletion here
+            var id = $('#myModal').data('id');
+            // $('[data-id=' + id  + ']').parents('tr').remove();
+            window.location = "{% url 'delete_slider' 12 %}".replace(/12/, id);
+            $('#myModal').modal('hide');
+
+        });
+    </script>
+
+</body>
+
+
+</html>

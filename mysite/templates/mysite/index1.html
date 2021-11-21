@@ -1,0 +1,372 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fa" lang="fa">
+
+<head>
+
+    <title> هواداران بارسلونا در افغانستان</title>
+
+    <!-- CSS files -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="all" href="https://www.fcbarcelona.ir/index/xoops.css" />
+    <link rel="stylesheet" type="text/css" media="all"
+        href="https://www.fcbarcelona.ir/index/themes/Barca 2016/styleNN.css" />
+
+    <!-- jQuary -->
+
+    <script type="text/javascript"
+        src="https://www.fcbarcelona.ir/index/themes/js/jquery-1.7.min.js?ver=1.0.7"></script>
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/themes/js/MyFunctions.js"></script>
+
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/themes/js/effects.js?ver=1.01"></script>
+    <!-- Yellow announcement windows on page top -->
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/themes/js/jquery-1.3.2.min.js"></script>
+    <!-- Show / hide Menu -->
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/themes/js/showhide.js"></script>
+
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/themes/js/tooltip.js"></script>
+    <!-- Hyperlink hover text -->
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/themes/js/tooltip2.js"></script>
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/themes/js/tooltipENG.js"></script>
+
+    <script type="text/javascript"
+        src="https://www.fcbarcelona.ir/index/themes/js/jquery.fancybox-1.3.4.pack.js?ver=1.0.7"></script>
+    <!-- Image Display -->
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/themes/js/custom.js?ver=1.0.7"></script>
+
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/themes/js/jwpsrv.js"></script>
+    <!-- FWPlayer -->
+
+    <script type="text/javascript">//<![CDATA[ 
+
+        $(window).load(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 233) {
+                    $('body').addClass('fix');
+                } else {
+                    $('body').removeClass('fix');
+                }
+            });
+        });//]]>  
+
+    </script>
+
+    <!-- RMV: added module header -->
+    <script src="https://www.fcbarcelona.ir/index/include/xoops.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://www.fcbarcelona.ir/index/class/textsanitizer/image/image.js"></script>
+    <link rel="stylesheet" href="https://www.fcbarcelona.ir/index/language/persian/style.css" type="text/css" />
+
+
+    <script type="text/javascript">
+// <!--
+
+// //-->
+    </script>
+    <style>
+        .postContent {
+            height: 5.5em;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body id="top" class="" onclick="">
+    <script>
+        (function () {
+            var startUrlEl = document.querySelector("meta[name=msapplication-starturl]");
+            if (!!startUrlEl === true && navigator.standalone === true) {
+                var lastUrl = localStorage["navigate"];
+                history.pushState({ launched: (!!lastUrl == false && history.length === 1) }, undefined, lastUrl || startUrlEl.content);
+                localStorage.removeItem("navigate");
+
+                // Intercept all anchor clicks and keep fullscreen if in origin
+                document.addEventListener("click", function (e) {
+                    var target = e.target;
+                    if (target.tagName === 'A') {
+
+                        var href = target.getAttribute("href");
+                        var linkedUrl = new URL(target.href);
+                        if (linkedUrl.origin === location.origin) {
+                            e.preventDefault();
+                            location.href = href;
+                        }
+                        else {
+                            // When we are navigating away store the state so we can resume.
+                            localStorage["navigate"] = location.href;
+                        }
+                    }
+                });
+            }
+        })();
+    </script>
+
+    <div align="center" id="everything" onClick="">
+
+        <!-- Go to top button, top left corner of the pages -->
+
+        <div><a style="display: inline;" href="#top" id="BackToTop"><span></span></a></div>
+
+        <!-- Unread PM notification box, bottom right corner of the pages -->
+
+
+        <!-- Header bar -->
+
+        <div id="siteheader">
+            <div id="sh_content">
+                <a class="tooltip2" href="#" title="صفحه ورودی سایت" style="margin: 0px 5px 0 15px !important;"
+                    target="_blank"><i class="im-home2"></i></a>
+                <a href="#">پیشنهادات و
+                    انتقادات</a>
+                <a href="#">طرح شکایات</a>
+                <a>بازدید : {{ num_visits }}</a>
+
+            </div>
+        </div>
+
+        <!-- Top header bar consisting the main logo -->
+
+        <div id="header_bar_bg">
+            <div id="header_bar">
+                <div id="header_right">
+                    <a style="margin-right:10px;" href="https://instagram.com/fcbarcelona_dot_ir"
+                        title="صفحه رسمی سایت در اینستاگرام<br />اخبار و حواشی پیرامون آبی و اناری‌ها را مشاهده کنید."
+                        class="tooltip" target="_blank"><img src="https://www.fcbarcelona.ir/images/icons/Insta.png"
+                            height="70" /></a><a style="margin-right:10px;"
+                        href="https://telegram.me/fcbarcelona_dot_ir"
+                        title="کانال رسمی سایت در تلگرام<br />برای دریافت آخرین اخبار در کوتاه‌ترین زمان ممکن، عضو شوید."
+                        class="tooltip" target="_blank"><img src="https://www.fcbarcelona.ir/images/icons/Telegram.png"
+                            height="70" /></a><a style="margin-right:10px;" href="https://www.aparat.com/fcbarcelona"
+                        title="کانال رسمی سایت در آپارات<br />آخرین ویدئوهای آبی و اناری را تماشا کنید." class="tooltip"
+                        target="_blank"><img src="https://www.fcbarcelona.ir/images/icons/Aparat.png" height="70" /></a>
+                </div>
+                <!-- <div id="header_left"><a href="/"><img
+                            src="https://www.fcbarcelona.ir/index/themes/Barca 2016/images/Slogan.png" /></a></div>
+            </div> -->
+        </div>
+
+        <div id="bar_container_bg" onClick="">
+            <div id="bar_container">
+                <div id="show_hide_bar">
+                    <img src="https://www.fcbarcelona.ir/index/themes/Barca 2016/images/up.png" />
+                </div>
+
+                <!-- Main button bar -->
+
+                <div class="main_bar_bg">
+                    <div class="main_bar">
+                        <div><a href="#">صفحه اصلی</a></div>
+                        <div><a href="#" title="">تماس با ما</a>
+                        </div>
+                        <div><a href="#" title=""> خدمات ما</a>
+                        </div>
+
+
+                        <br style="clear:both;" />
+                    </div>
+                </div>
+
+                <!-- Personal bar -->
+
+                <div id="SecBar_bg">
+                    <div id="SecBar">
+
+
+                        <div>
+                            <center>
+                                به وبسایت تخصصی هواداران بارسلونا در افغانستان خوش آمدید
+                            </center>
+                        </div>
+
+                        <br style="clear:both;" />
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Set defaults -->
+
+
+
+
+
+
+
+
+        <!-- Wide blocks -->
+
+
+        <div id="wide_bar_bg">
+            <div id="wide_bar">
+
+                <div class="wideBlocks">
+                    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                    <link rel="stylesheet" type="text/css" media="all"
+                        href="https://www.fcbarcelona.ir/index/themes/jssor_slideshow.css" />
+                    <script type="text/javascript"
+                        src="https://www.fcbarcelona.ir/index/themes/js/jssor_slideshow.js"></script>
+                    <center>
+                        <div id="jssor_news_header" class="Yekan16">
+                            <center> گالری عکس وبسایت هواداران بارسلونا در افغانستان </center>
+                        </div>
+                    </center>
+                    <div id="jssor_all"
+                        style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 1000px; height: 600px; overflow: hidden; visibility: hidden;">
+                        <!-- Loading Screen -->
+                        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+                            <div
+                                style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;">
+                            </div>
+                            <div
+                                style="position:absolute;display:block;background:url('https://www.fcbarcelona.ir/index/themes//images/loading.png') no-repeat center center;top:0px;left:0px;width:100%;height:100%;">
+                            </div>
+                        </div>
+                        <div data-u="slides"
+                            style="cursor: default; position: relative; top: 0px; left: 0px; width: 1000px; height: 500px; overflow: hidden;">
+                            {% for item1 in slide %}
+                            <div id="slideshow_content" data-p="187.50" style="display: none;">
+
+                                <img data-u="image" src="{{ item1.img_url }}" />
+                                <img data-u="thumb" src="{{ item1.img_url }}" />
+                            </div>
+                            {% endfor %}
+                        </div> <!-- Thumbnail Navigator -->
+                        <div data-u="thumbnavigator" class="jssort_thumb"
+                            style="position:absolute;left:0px;bottom:0px;width:1000px;height:100px;"
+                            data-autocenter="1">
+                            <!-- Thumbnail Item Skin Begin -->
+                            <div data-u="slides" style="cursor: default;">
+                                <div data-u="prototype" class="p">
+                                    <div class="w">
+                                        <div data-u="thumbnailtemplate" class="t"> </div>
+                                    </div>
+                                    <div class="c"></div>
+                                </div>
+                            </div> <!-- Thumbnail Item Skin End -->
+                        </div> <!-- Arrow Navigator --> <span data-u="arrowleft" class="jssora16l"
+                            style="top:232px;left:15px;width:22px;height:36px;"></span> <span data-u="arrowright"
+                            class="jssora16r" style="top:232px;right:15px;width:22px;height:36px;"></span>
+                    </div>
+                    <script>jssor_all_slider_init();</script><!-- #endregion Jssor Slider End -->
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- END -->
+
+        <!-- 2nd Wide blocks -->
+
+
+        <div id="wide_bar_bg2">
+            <div id="wide_bar2">
+
+
+                <!-- <div class="wideBlocks2"><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><div id='random_newsTOP' style='background:url(https://www.fcbarcelona.ir/index/modules/news/images/news_bg_default.jpg); background-size:cover;'><a href='https://www.fcbarcelona.ir/index/modules/news/article.php?storyid=17767#siteBody' class='tooltip' title='چگونه لاپورتا با رفتنش، بارسا و غرورش را هم با خود برد؟!' style='background:url(https://www.fcbarcelona.ir/index/uploads/resizer/news/17767_medium.jpg) no-repeat center top, url(https://www.fcbarcelona.ir/index/modules/news/images/news_bg_default.jpg) center top; background-size:cover;'><span>چگونه لاپورتا با رفتنش، بارسا و غرورش را هم با خود برد؟!</span></a><a href='https://www.fcbarcelona.ir/index/modules/news/article.php?storyid=12364#siteBody' class='tooltip' title='چگونه یوهان کرایف فوتبال مدرن را در بارسلونا از نو ابداع کرد؟' style='background:url(https://www.fcabianari.ir/index/uploads/resizer/news/12364_medium.jpg) no-repeat center top, url(https://www.fcbarcelona.ir/index/modules/news/images/news_bg_default.jpg) center top; background-size:cover;'><span>چگونه یوهان کرایف فوتبال مدرن را در بارسلونا از نو ابداع کرد؟</span></a><a href='https://www.fcbarcelona.ir/index/modules/news/article.php?storyid=17823#siteBody' class='tooltip' title='شبی که دنیا به احترام نیوکمپ ایستاد... (ویدئو)' style='background:url(https://www.fcbarcelona.ir/index/uploads/resizer/news/17823_medium.jpg) no-repeat center top, url(https://www.fcbarcelona.ir/index/modules/news/images/news_bg_default.jpg) center top; background-size:cover;'><span>شبی که دنیا به احترام نیوکمپ ایستاد... (ویدئو)</span><div id='play'></div></a><a href='https://www.fcbarcelona.ir/index/modules/news/article.php?storyid=15039#siteBody' class='tooltip' title='لیونل مسی، مذهب و معنای تماشای ورزش' style='background:url(https://www.fcabianari.ir/index/uploads/resizer/news/15039_medium.jpg) no-repeat center top, url(https://www.fcbarcelona.ir/index/modules/news/images/news_bg_default.jpg) center top; background-size:cover;'><span>لیونل مسی، مذهب و معنای تماشای ورزش</span></a><div id='cover'><span>داغترین اخبار و مقالات اختصاصی</span><span>برای مشاهده اخبار منتخب کلیک کنید!</span></div></div>	<style>	/* CSS Document */		body { direction:rtl; }		div#random_news_header { position:relative; padding: 10px; border-radius: 10px 10px 0 0; background: #e9bc50; border-bottom: 1px solid #c8a146; }	div#random_news_header span { background: green; position: absolute; right: 0; left: 0; top: 100%; bottom: 0; z-index: 1; opacity: 1; visibility:hidden; }	div#random_news_header:hover span { top: 100%; padding-bottom: 25%; visibility:visible; }	div#random_news_header span p { margin: auto 0px; transform: translate(50%, -50%); top: 50%; position: absolute; right: 50%; font-family:Yekan; font-size:24px; width: 100%; padding: 0 50px; box-sizing: border-box; text-align: justify; visibility:hidden; transition-delay:0.7s; }	div#random_news_header:hover span p { visibility:visible; }		div#random_news_header span { display:none; } /* Removes the whole text slider thing */		/* Main Table */		/*div#random_newsTOP { position:relative; width:100%; padding-bottom:20%; overflow:hidden; } Collapsed mode */	div#random_newsTOP { position:relative; width:100%; padding-bottom:25%; overflow:hidden; }	div#random_newsTOP:hover { padding-bottom:25%; transition-delay:0.7s; }		div#random_newsTOP, div#random_newsTOP a, div#random_newsTOP_header span { -webkit-transition: all 0.7s ease-in-out;-moz-transition: all 0.7s ease-in-out;-o-transition: all 0.7s ease-in-out;transition: all 0.7s ease-in-out; }		div#random_newsTOP a { position:absolute; width:25%; height:100%; }	div#random_newsTOP a span { position:absolute; bottom:0; right:0; left:0; background:rgba(30, 30, 30, 0.7); font-family:IranSANS; font-size:20px; visibility:hidden; }div#random_newsTOP a:nth-child(1) { right:0%; top:0%; }div#random_newsTOP a:nth-child(2) { right:25%; top:0%; }div#random_newsTOP a:nth-child(3) { right:50%; top:0%; }div#random_newsTOP a:nth-child(4) { right:75%; top:0%; }/* When hover */				div#random_newsTOP:hover a:hover span { display:none; }/* Cover */		div#random_newsTOP div#cover { position:absolute; background:rgba(0, 0, 0, 0.7); top:0; right:0; left:0; bottom:0; width: 100%; height:100%; }	div#random_newsTOP div#cover span { position: absolute; color: #eee; font-family: Janata; font-size: 48px; top: 50%; visibility: visible; background:none; left: unset; bottom: unset; -ms-transform: translateY(-50%); -webkit-transform: translateY(-50%); -moz-transform: translateY(-50%); transform: translateY(-50%); width:100%; text-align:center; text-shadow: 0 0 5px #000; }		div#random_newsTOP:hover div#cover, div#random_newsTOP:hover div#cover span:nth-child(1), div#random_newsTOP div#cover span:nth-child(2) { display:none; }	div#random_newsTOP:hover div#cover span:nth-child(2) { display:block; font-size: 42px; color:#ccc; }		</style></div> -->
+                <!-- <div class="blockTitle side" style="width: 30%;">
+
+        </div>
+        <div class="blockContent side" style="width: 30%;">
+
+            </div> -->
+                <div class="container d-flex">
+                    <div class="col-9 m-1">
+                        {% for item in post reversed%}
+                        <div class="blockTitle"><a style="color: white;" href="{% url 'post_url' item.id %}">
+                                {{ item.title }}</a></div>
+                        <div class="blockContent">
+                            <div class="postContent" style="direction: ltr !important;">
+                                <p>{{ item.content }}</p>
+                            </div>
+                            <hr>
+                            <div class="p-1">
+                                <a href="{% url 'post_url' item.id%}" class="btn bg-primary white"
+                                    style="padding: 3px; "> Read More </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-3 m-1">
+                        <div class="blockTitle">Latest Posts</div>
+
+                        <div class="blockContent" style="direction: ltr;">
+                            <ul>
+                                {% for i in post reversed %}
+                                <li><a href=" {% url 'post_url' i.id %}">{{i.title}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="footbarBG">
+            <div class="footBar">
+
+                <div class="footBegin"> هرگونه کپی برداری از مطالب این سایت، تنها با ذکر نام منبع 
+                    مجاز است!</div>
+
+                <div class="footSep"></div>
+
+                <div id="footBody">
+
+                    <div class="footLeft"></div>
+
+                    <div class="footRight">
+                        <div class="footRightText">
+                            <a href="/">صفحه اصلی</a>
+                            <a href="/">اخبار بارسا</a>
+                        </div>
+                    </div>
+
+                    <div class="footCenter">
+
+
+                        <div class="footCenterText3">
+                            درباره سایت
+                            <a href="/">سازندگان
+                                سایت</a>
+                            <!--<a href="https://barca.1000charge.com/" target="_blank">فروشگاه شارژ سایت</a>
+                                <a href="https://www.fcbarcelona.ir/index/../epay" target="_blank">درگاه پرداخت آنلاین سایت</a>-->
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="footSep"></div>
+
+                <div class="footEndLeft">
+                    <!--<span style="font-size:120%;">©</span> Copyright <a href="https://www.fcbarcelona.ir">FCBarcelona.ir</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                    <!--Theme By: <a href="mailto:saeed.imeny@fcbarcelona.ir">Saeed Imeny</a>-->
+                </div>
+
+                <div class="footEndCenter"><a href="https://instagram.com/fcbarcelona_dot_ir"
+                        title="صفحه رسمی سایت در اینستاگرام" target="_blank"><i class="im-instagram"></i></a></div>
+
+                <div class="footEndRight">
+                </div>
+
+                <br style="clear:both;">
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- END -->
+    <script src="bootstrap.bundle.min.js.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

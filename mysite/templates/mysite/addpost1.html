@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MYX Dashboard</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- bootstrap -->
+    <link href="https://erwinagpasa.com/myxdashboard/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://erwinagpasa.com/myxdashboard/css/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
+
+    <!-- theme -->
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/theme/default.css" />
+
+    <!-- libraries -->
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/notify.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://erwinagpasa.com/myxdashboard/css/elements/bootstrap_calendar.css" />
+    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/pizza.css" />
+
+
+
+    <!-- open sans font -->
+    <link
+        href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+        rel='stylesheet' type='text/css' />
+
+    <!--[if lt IE 9]>
+      <script src="js/html5.js"></script>
+    <![endif]-->
+    <script src="https://kit.fontawesome.com/4755752317.js" crossorigin="anonymous"></script>
+    <style>
+        .navbar-brand img.logo {
+            width: 10em !important;
+            height: 2em !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- navbar -->
+    <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" id="menu-toggler">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/dashboard"><img
+                    src="https://www.fcbarcelona.ir/index/themes/Barca 2016/images/Slogan.png" alt="logo"
+                    class="logo" /></a>
+        </div>
+
+    </header>
+    <!-- end navbar -->
+
+    <!-- sidebar -->
+    <div id="sidebar-nav">
+        <ul id="dashboard-menu">
+            <li>
+                <a href="/dashboard">
+                    <i class="fa fa-laptop"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="active">
+                <div class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a href="/addpost">
+                    <i class="fa fa-pencil-square-o"></i>
+                    <span>Add Post</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="dropdown-toggle" href="/dashboard-slider">
+                    <i class="fa fa-table"></i>
+                    <span>Slider</span>
+                </a>
+            </li>
+
+
+
+            <li>
+                <a href="/customisation">
+                    <i class="fa fa-signal"></i>
+                    <span>Customize</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- end sidebar -->
+
+
+    <!-- main container -->
+    <div class="content">
+        <div id="pad-wrapper">
+            <h4>Form</h4>
+
+
+            <!-- Profile Form -->
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Profile Form</strong></div>
+                    <div class="panel-body">
+
+                        <form class="form-horizontal" method="POST" action="">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Post Title</label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="title" maxlength="100" required id="id_title"
+                                        placeholder="Title" value="{{ p_title }}" data-required="true"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Post Image URL</label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="img" value="{{ p_img }}" maxlength="1000" required
+                                        id="id_img" placeholder="Image URL" data-required="true" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Post Content</label>
+                                <div class="col-lg-8">
+                                    <textarea name="content" cols="40" rows="10" maxlength="50000" required
+                                        id="id_content" placeholder="Content" class="form-control" data-trigger="keyup"
+                                        data-rangelength="[20,5000]">{{ p_content }}</textarea>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-lg-9 pull-right">
+                                    <!-- <button type="cancel" class="btn btn-default">Cancel</button> -->
+                                    <button type="submit" class="btn bg-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- /Profile Form -->
+
+
+
+
+            <div class="clearfix"></div>
+            <footer id="footer">
+                <div class="text-center clearfix">
+                    <p><small>&copy Milestone Institute Alrights Reserved</small>
+                        <br /><br />
+                        <a href="#" class="btn btn-xs btn-circle btn-twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="btn btn-xs btn-circle btn-facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="btn btn-xs btn-circle btn-gplus"><i class="fa fa-google-plus"></i></a>
+                    </p>
+                </div>
+            </footer>
+
+
+        </div><!-- /pad-wrapper -->
+    </div><!-- content -->
+    <!-- /main container -->
+
+
+
+
+
+
+
+    <!-- scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/theme.js"></script>
+
+    <script src="js/form/app.js"></script>
+    <script src="js/form/app.plugin.js"></script>
+    <script src="js/form/datepicker/bootstrap-datepicker.js"></script>
+    <script src="js/form/slider/bootstrap-slider.js"></script>
+    <script src="js/form/bootstrap.file-input.js"></script>
+    <script src="js/form/combodate/moment.min.js"></script>
+    <script src="js/form/combodate/combodate.js"></script>
+    <script src="js/form/parsley/parsley.min.js"></script>
+
+
+
+    <script src="js/tables/jquery.peity.min.js"></script>
+    <script src="js/tables/peity-demo.js"></script>
+    <script src="js/tables/icheck.min.js"></script>
+
+    <!--wysiwyg editor -->
+    <script src="js/editor/wysihtml5-0.3.0.js"></script>
+    <script src="js/editor/bootstrap3-wysihtml5.js"></script>
+
+
+    <script type="text/javascript">
+        //wysihtml5
+        $('.textarea').wysihtml5({
+            "font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
+            "emphasis": true, //Italics, bold, etc. Default true
+            "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+            "html": true, //Button which allows you to edit the generated HTML. Default false
+            "link": true, //Button to insert a link. Default true
+            "image": true, //Button to insert an image. Default true,
+            "color": false, //Button to change color of font
+            "size": 'sm' //Button size like sm, xs etc.
+        });
+
+
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+
+</body>
+
+
+</html>

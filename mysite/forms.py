@@ -1,5 +1,5 @@
 from django import forms
-from .models import Login, posts,slider
+from .models import Login, comments, posts,slider
 
 
 # Form for post to add or update
@@ -13,6 +13,7 @@ class PostForm(forms.ModelForm):
             'content'
             
         ]
+
 
 # Form to add or update slider images 
 class SliderForm(forms.ModelForm):

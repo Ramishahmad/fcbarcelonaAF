@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 
 
 # Table for login 
@@ -32,3 +33,12 @@ class posts(models.Model):
         
     def view(self):
         self.views += 1
+
+
+class comments(models.Model):
+    name = models.CharField(max_length=100,null=False)
+    content = models.TextField(max_length=500,null=False)
+    post = models.ForeignKey(posts,on_delete=CASCADE)
+
+    def __str__(self):
+        return 'name: {} , comment id: {} ,  Post: {} '.format(self.name,self.id,self.post.title)

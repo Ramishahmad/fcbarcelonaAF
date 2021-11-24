@@ -14,7 +14,7 @@
         href="https://www.fcbarcelona.ir/index/themes/Barca 2016/styleNN.css" />
 
     <!-- jQuary -->
-    
+
 
     <script type="text/javascript"
         src="https://www.fcbarcelona.ir/index/themes/js/jquery-1.7.min.js?ver=1.0.7"></script>
@@ -287,14 +287,83 @@
                         <p style="direction: ltr;">
                             {{ post.content }}
                         </p>
+                        <hr>
                     </div>
                 </div>
+
                 <div class="newsFooter newsInfo">
                     <span style="float:left"></span>
                 </div>
             </div>
 
+            <div class="blockTitle">
+                <center>نظرات کاربران</center>
+            </div>
+            <div class="blockContent" style="padding-bottom:0;">
+
+
+                <!-- start comment post -->
+                {% for items in comments %}
+
+                <table id="commentTable" class="outer" cellspacing="0" style="margin-bottom:10px;">
+                    <tr id="comment341883">
+                        <th style="width:160px;">
+                            <center><a href="#">{{items.name}}</a>
+                            </center>
+                        </th>
+                        <th style="text-align:right;">{{ post.tilte }}</th>
+                        <th class="middle" style="width: 35px; text-align: center; padding: 0px;"><a
+                                href="#" title="نظر شماره {{ comments.id}}"><img
+                                    src="https://www.fcbarcelona.ir/index/images/icons/no_posticon.gif" alt="" /></a>
+                        </th>
+                    </tr>
+                    <tr>
+
+
+                        <td class="difRowDarker" style="padding:0px;">
+                           <div id="commentPoster"
+                                style="background:url('user.jpg') center top no-repeat; background-size:cover;">
+                                <div id="commentPosterRankImg">
+                                </div>
+                            </div>
+
+                        </td>
+
+
+                        <td id="commentTXT" colspan="2" class="odd Yekan14"
+                            style="padding:8px 10px 10px 10px; text-align:justify;">
+                            {{ items.content }}
+                            <br /><br /><br />
+
+
+                            &nbsp;
+
+
+
+                        </td>
+                    </tr>
+                </table>
+                {% endfor %}
+                
+            </div>
+            <div class="blockTitle">
+                <center>نظرات کاربران</center>
+            </div>
+            <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    <h3>Type your comment</h3>
+                    <br>
+                    <label for="comment_name"> Your Name: </label>
+                    <input style="direction: ltr;" type="text" name="name" id="comment_name">
+                    <br>
+                    <label style="direction: ltr;" for="comment_content"> Your Comment: </label>
+                    <textarea name="content" id="comment_content" cols="2" rows="3"></textarea>
+                    <button type="submit" class="btn btn-primary"> Submit </button>
+                </form>
+                </div>
         </div>
+
         <div id="footbarBG">
             <div class="footBar">
 
@@ -316,7 +385,7 @@
                     <div class="footCenter">
                         <div class="footCenterText1">
                             درباره باشگاه
-                         <a href="/">درباره سایت</a>
+                            <a href="/">درباره سایت</a>
                         </div>
                     </div>
 

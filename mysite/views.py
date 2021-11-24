@@ -1,6 +1,7 @@
+from abc import abstractmethod
 from django.db.models import fields, Q
 from django.shortcuts import get_object_or_404, render
-from .models import  posts, slider
+from .models import  posts, slider,comments
 from .forms import LoginForm, PostForm, SliderForm
 from django.http import HttpResponseRedirect
 from .models import Login
@@ -37,14 +38,32 @@ def index(request):
 
 # Function for detail view of post
 def singlepost(request,pid):
+    
     slide = slider.objects.all()
     post1 = posts.objects.all() 
     post = posts.objects.get(id=pid)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        content = request.POST.get('content')
+        name1 = request.user.username
+        if (name != ""):
+            if (content != ""):
+                commentnew = comments.objects.create(name=name,content=content,post=post)
+                commentnew.save()
+                return HttpResponseRedirect('/post/{}'.format(post.id))
+                
+        
+
+
+    comment = comments.objects.filter(post__id=pid)
+
     post2 = get_object_or_404(posts,id=pid)
     post2.view()
     post2.save()
     views = post2.views
+
     context = {
+        'comments':comment,
         'slide':slide,
         'post':post,
         'post1':post1, 

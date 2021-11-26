@@ -95,7 +95,7 @@
                 </div>
                 <a href="">
                     <i class="fa fa-settings"></i>
-                    <span>Customize </span>
+                    <span>Comments </span>
                 </a>
             </li>
 
@@ -112,7 +112,7 @@
             <!-- ORDER TABLE -->
             <div class="col-md-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Slides</strong> <a href="#" class="pull-right"></a>
+                    <div class="panel-heading"><strong>Comments</strong> <a href="#" class="pull-right"></a>
                     </div>
                     <div class="panel-body no-padding">
 
@@ -121,17 +121,17 @@
 
 
                                 <tbody>
-                                    {% for item in slide reversed %}
+                                    {% for item in comments reversed %}
                                     <tr>
 
                                         <td>
-                                            <a href="{{ item.img_url }}" target="_blank_">{{item.name}}</a>
+                                            <p><strong>{{item.post.title}}</strong></p>
                                         </td>
 
-                                        <td class="purchased"></td>
-                                        <td><span class="label label-success"> Published </span></td>
+                                        <td class="purchased">{{item.content}}</td>
+                                        <td><span class="label" style="background-color: {{item.show_comment_color}};"> {{item.show_comment_label}} </span></td>
                                         <td class="text-right">
-                                            <a class="btn" href="{% url 'update_slider' item.id %}"><i
+                                            <a style="display:{{item.show_comments}};" class="btn" href="{% url 'show_comment' item.id %}"><i
                                                     class="fa fa-pencil-square-o"></i></a>
                                             <a href="#" class="confirm-delete btn" role="button"
                                                 data-title="{{item.name}}" data-id="{{item.id}}">
@@ -151,7 +151,53 @@
             </div>
             <!-- /ORDER TABLE -->
 
+            
+            <!-- PRODUCT -->
             <div class="col-md-6">
+                <div class="panel panel-default post-wrap pro-box">
+                    <div class="panel-heading"><strong> Filter Comments </strong></div>
+
+                    <div class="post-info"
+                        style="overflow:hidden; text-overflow:ellipsis;  display: -webkit-box; -webkit-line-clamp: 5; line-clamp: 5; -webkit-box-orient: vertical;">
+                        <span class="arrow-pro right"></span>
+                        <div class="panel-body">
+                            <form class="form-horizontal" method="POST" action=""
+                            style="padding: 1px !important; margin-top: 5px !important;">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Filter : </label>
+                                <div class="col-lg-5">
+                                    <input type="text" name="name" maxlength="20" required id="id_title"
+                                        placeholder=" Filter Comment" value="" data-required="true"
+                                        class="form-control">
+                                </div>
+                                <div class="col-lg-1">
+                                    <!-- <button type="cancel" class="btn btn-default">Cancel</button> -->
+                                    <button type="submit" class="btn btn-sm bg-primary">Add Filter</button>
+                                   
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="desk based" style="display: flex; flex-wrap: wrap;">
+                            {% for items in filters %}
+                                <span class="label" style="background-color: rgb(151, 146, 146); margin-right: 2px; font-size: 1em; margin-bottom: 4px;"> {{items.name}}
+                                <a href="{% url 'delete_comment_filter' items.id %}" style="color: red; margin-left: 3px;" > x </a>
+                                </span>  
+                               {% endfor %}
+                                
+                                
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- </aside> -->
+
+                </div>
+            </div>
+            <!-- /PRODUCT -->
+
+            <!-- <div class="col-md-6">
                 <div class="panel panel-default post-wrap pro-box">
                     <div class="panel-heading"><strong>{{addorupdate}}</strong></div>
                     <form class="form-horizontal" method="POST" action=""
@@ -177,14 +223,14 @@
                         <div class="form-group">
                             <div class="col-lg-9 pull-right">
                                 <!-- <button type="cancel" class="btn btn-default">Cancel</button> -->
-                                <button type="submit" class="btn bg-primary">Save Changes</button>
+                                <!-- <button type="submit" class="btn bg-primary">Save Changes</button>
                                 <a href="/dashboard-slider" class="btn" role="button"
                                     style="color: white; background-color: rgba(81, 160, 81, 0.842);"> New
                                 </a>
                             </div>
                         </div>
-                    </form>
-
+                    </form> -->
+<!-- 
                     <aside class="post-highlight based v-align">
                         <div class="panel-body text-center">
                             <div class="pro-thumb" style="height: 220px;">
@@ -193,8 +239,8 @@
                             </div>
                         </div>
 
-                </div>
-            </div>
+                </div> -->
+            </div> 
             <!-- /PRODUCT -->
 
 
@@ -310,7 +356,7 @@
             // handle deletion here
             var id = $('#myModal').data('id');
             // $('[data-id=' + id  + ']').parents('tr').remove();
-            window.location = "{% url 'delete_slider' 12 %}".replace(/12/, id);
+            window.location = "{% url 'delete_comment' 12 %}".replace(/12/, id);
             $('#myModal').modal('hide');
 
         });

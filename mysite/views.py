@@ -1,10 +1,9 @@
 from abc import abstractmethod
 from django.db.models import fields, Q
-from django.shortcuts import get_object_or_404, render
-from .models import  posts, slider,comments
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import  posts, slider,comments,FilterComments,Login
 from .forms import LoginForm, PostForm, SliderForm
 from django.http import HttpResponseRedirect
-from .models import Login
 from django.urls import reverse_lazy
 
 
@@ -42,21 +41,35 @@ def singlepost(request,pid):
     slide = slider.objects.all()
     post1 = posts.objects.all() 
     post = posts.objects.get(id=pid)
+    filtercomment = FilterComments.objects.all()
+    filtered = False
     if request.method == 'POST':
-        name = request.POST.get('name')
+        name1 = request.POST.get('name')
         content = request.POST.get('content')
-        name1 = request.user.username
-        if (name != ""):
+        # name1 = request.user.username
+
+        # for items in filtercomment:
+        #     if content in items.name:
+        #         filtered = True
+
+        for items in filtercomment:
+            x =  content.find(items.name)
+            if x != -1:
+                filtered= True
+                break
+        
+        if (name1 != ""):
             if (content != ""):
-                commentnew = comments.objects.create(name=name,content=content,post=post)
-                commentnew.save()
-                return HttpResponseRedirect('/post/{}'.format(post.id))
+                if filtered == False:
+                    commentnew = comments.objects.create(name=name1,content=content,post=post)
+                    commentnew.save()
+                    return HttpResponseRedirect('/post/{}'.format(post.id))
                 
         
 
-
-    comment = comments.objects.filter(post__id=pid)
-
+    
+    comment = comments.objects.filter(post__id=pid,show_comment=True)
+    
     post2 = get_object_or_404(posts,id=pid)
     post2.view()
     post2.save()
@@ -214,11 +227,48 @@ def deleteSlider(request,sid):
      return HttpResponseRedirect(reverse_lazy('dashboard_slider'))
 
 
-# Function for customisation page 
-def customisation(request):
+# Function for Comment page 
+def comments1(request):
      
+    comment = comments.objects.all()
+    filtercomments = FilterComments.objects.all()
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        filters = FilterComments.objects.create(name=name)
+        filters.save
+        return redirect(reverse_lazy('comments'))
+    # show_comment = comments.objects.filter(show_comment=True)
+    # show_comments = "none"
+    # if (show_comment==True):
+    #     show_comments = "hidden"
+
         
-     context = {
+    context = {
         # 'form':form
+        'comments':comment,
+        'filters':filtercomments,
      }
-     return render(request,"mysite/customisation.html",context)
+    return render(request,"mysite/customisation.html",context)
+
+def showComment(request,cid):
+
+    comment = comments.objects.get(id=cid)
+    comment.show_comment=True
+    comment.show_comments='none'
+    comment.show_comment_label =" Published "
+    comment.show_comment_color =" green "
+    comment.save()
+    
+    return redirect('/comments')
+
+
+def deleteComment(request,cid):
+     s = comments.objects.get(id=cid)
+     s.delete()
+     return HttpResponseRedirect(reverse_lazy('comments'))
+
+def deleteCommentFilter(request,fid):
+     s = FilterComments.objects.get(id=fid)
+     s.delete()
+     return HttpResponseRedirect(reverse_lazy('comments'))

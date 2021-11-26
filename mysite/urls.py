@@ -1,5 +1,6 @@
 
-from mysite.views import  customisation, dashboard_slider, deletePost, deleteSlider, updatePost, updateSlider
+from mysite.models import comments
+from mysite.views import   comments1, dashboard_slider, deleteComment, deleteCommentFilter, deletePost, deleteSlider, showComment, updatePost, updateSlider
 from django.urls import path,include
 from mysite.views import index, login1, singlepost, dashboard, addPost
 
@@ -16,6 +17,10 @@ urlpatterns = [
     path('addpost/',addPost, name='add_post'),
     path('dashboard-slider/',dashboard_slider, name='dashboard_slider'),
     path('<sid>/update-slider/',updateSlider,name='update_slider'),
-    path('customisation',customisation, name='customisation')
+    path('<cid>/show-comment/',showComment,name='show_comment'),
+    path('comments',comments1, name='comments'),
+    path('<cid>/delete-comment/',deleteComment,name='delete_comment'),
+    path('<fid>/delete-comment-filter/',deleteCommentFilter,name='delete_comment_filter'),
+
 
 ]

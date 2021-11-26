@@ -1,5 +1,5 @@
 
-{% extends 'base.html' %}
+{% extends 'mysite/base.html' %}
         
     {% block content %}
 
@@ -29,7 +29,7 @@
                         <div class="blockContent" style="direction: ltr;">
                             <ul>
                                 {% for item in post reversed %}
-                                <li><a href=" {% url 'post_url' i.id %}">{{item.title}}</a></li>
+                                <li><a href=" {% url 'post_url' item.id %}">{{item.title}}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>

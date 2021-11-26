@@ -168,7 +168,7 @@
                                 <label class="col-lg-2 control-label">Filter : </label>
                                 <div class="col-lg-5">
                                     <input type="text" name="name" maxlength="20" required id="id_title"
-                                        placeholder=" Filter Comment" value="" data-required="true"
+                                        placeholder=" Enter the word to filter" value="" data-required="true"
                                         class="form-control">
                                 </div>
                                 <div class="col-lg-1">
@@ -181,7 +181,7 @@
                             <div class="desk based" style="display: flex; flex-wrap: wrap;">
                             {% for items in filters %}
                                 <span class="label" style="background-color: rgb(151, 146, 146); margin-right: 2px; font-size: 1em; margin-bottom: 4px;"> {{items.name}}
-                                <a href="{% url 'delete_comment_filter' items.id %}" style="color: red; margin-left: 3px;" > x </a>
+                                <a href="{% url 'delete_comment_filter' items.id %}" style="color: rgba(240, 37, 37, 0.959); margin-left: 3px;" > <strong>x</strong>  </a>
                                 </span>  
                                {% endfor %}
                                 

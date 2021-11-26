@@ -42,6 +42,8 @@ def singlepost(request,pid):
     post1 = posts.objects.all() 
     post = posts.objects.get(id=pid)
     filtercomment = FilterComments.objects.all()
+    not_allowed = " "
+    filtered_word = " "
     filtered = False
     if request.method == 'POST':
         name1 = request.POST.get('name')
@@ -54,8 +56,11 @@ def singlepost(request,pid):
 
         for items in filtercomment:
             x =  content.find(items.name)
+            
             if x != -1:
                 filtered= True
+                not_allowed = "show"
+                filtered_word = items.name
                 break
         
         if (name1 != ""):
@@ -76,6 +81,8 @@ def singlepost(request,pid):
     views = post2.views
 
     context = {
+        'filtered_word':filtered_word,
+        'not_allowed':not_allowed,
         'comments':comment,
         'slide':slide,
         'post':post,
@@ -249,7 +256,8 @@ def comments1(request):
         'comments':comment,
         'filters':filtercomments,
      }
-    return render(request,"mysite/customisation.html",context)
+    return render(request,"mysite/comments.html",context)
+
 
 def showComment(request,cid):
 
@@ -260,13 +268,14 @@ def showComment(request,cid):
     comment.show_comment_color =" green "
     comment.save()
     
-    return redirect('/comments')
+    return redirect(reverse_lazy('comments'))
 
 
 def deleteComment(request,cid):
      s = comments.objects.get(id=cid)
      s.delete()
      return HttpResponseRedirect(reverse_lazy('comments'))
+
 
 def deleteCommentFilter(request,fid):
      s = FilterComments.objects.get(id=fid)

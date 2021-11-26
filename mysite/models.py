@@ -41,7 +41,7 @@ class comments(models.Model):
     post = models.ForeignKey(posts,on_delete=CASCADE)
     show_comment = models.BooleanField(default=False)
     show_comments = models.CharField(max_length=10,default='hidden')
-    show_comment_label = models.CharField(max_length=20,default='Not Published')
+    show_comment_label = models.CharField(max_length=20,default='Pending Review')
     show_comment_color = models.CharField(max_length=20,default='red')
 
 

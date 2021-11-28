@@ -151,8 +151,13 @@ def dashboard(request):
 # Function to add new post
 def addPost(request):
     form = PostForm(request.POST or None)
-    if form.is_valid():
-        form.save()
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        image = request.FILES['image']
+        content = request.POST.get('content')
+
+        post = posts.objects.create(title=title,image=image,content=content)
+        post.save()
         return HttpResponseRedirect(reverse_lazy('dashboard'))
     
     context = {
@@ -172,7 +177,7 @@ def updatePost(request,pid):
     context = {
         'form1':form,
         'p_title': s.title,
-        'p_img': s.img,
+        'p_img': s.image,
         'p_content': s.content,
     }
     return render(request,"mysite/addpost1.html",context)
@@ -239,6 +244,7 @@ def comments1(request):
      
     comment = comments.objects.all()
     filtercomments = FilterComments.objects.all()
+
 
     if request.method == 'POST':
         name = request.POST.get('name')

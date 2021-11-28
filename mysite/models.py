@@ -24,9 +24,10 @@ class slider(models.Model):
 class posts(models.Model):
 
     title = models.CharField(max_length=100)
-    img = models.CharField(max_length=1000)
+    image = models.ImageField(upload_to='images',null=True,blank=True)
     content = models.TextField(max_length=50000)
     views = models.IntegerField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return "Title: {}  Views: {} ".format(self.title,self.views)
@@ -40,6 +41,7 @@ class comments(models.Model):
     content = models.TextField(max_length=500,null=False)
     post = models.ForeignKey(posts,on_delete=CASCADE)
     show_comment = models.BooleanField(default=False)
+    date = models.DateTimeField(auto_now_add=True)
     show_comments = models.CharField(max_length=10,default='hidden')
     show_comment_label = models.CharField(max_length=20,default='Pending Review')
     show_comment_color = models.CharField(max_length=20,default='red')

@@ -1,64 +1,6 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base_dashboard.html' %}
 
-<head>
-    <title>MYX Dashboard</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- bootstrap -->
-    <link href="https://erwinagpasa.com/myxdashboard/css/bootstrap.css" rel="stylesheet" />
-    <link href="https://erwinagpasa.com/myxdashboard/css/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
-
-    <!-- theme -->
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/theme/default.css" />
-
-    <!-- libraries -->
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/dashboard.css" />
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/notify.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://erwinagpasa.com/myxdashboard/css/elements/bootstrap_calendar.css" />
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/pizza.css" />
-
-
-
-    <!-- open sans font -->
-    <link
-        href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
-        rel='stylesheet' type='text/css' />
-
-    <!--[if lt IE 9]>
-      <script src="js/html5.js"></script>
-    <![endif]-->
-    <script src="https://kit.fontawesome.com/4755752317.js" crossorigin="anonymous"></script>
-    <style>
-        .navbar-brand img.logo {
-            width: 10em !important;
-            height: 2em !important;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- navbar -->
-    <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
-        <div class="navbar-header">
-            <button class="navbar-toggle" type="button" data-toggle="collapse" id="menu-toggler">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/dashboard"><img
-                    src="https://www.fcbarcelona.ir/index/themes/Barca 2016/images/Slogan.png" alt="logo"
-                    class="logo" /></a>
-        </div>
-
-    </header>
-    <!-- end navbar -->
-
+{% block content %}
     <!-- sidebar -->
     <div id="sidebar-nav">
         <ul id="dashboard-menu">
@@ -112,7 +54,7 @@
                     <div class="panel-heading"><strong>Profile Form</strong></div>
                     <div class="panel-body">
 
-                        <form class="form-horizontal" method="POST" action="">
+                        <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Post Title</label>
@@ -125,8 +67,8 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">Post Image URL</label>
                                 <div class="col-lg-8">
-                                    <input type="text" name="img" value="{{ p_img }}" maxlength="1000" required
-                                        id="id_img" placeholder="Image URL" data-required="true" class="form-control">
+                                    <input type="file" name="image" value="{{ p_img.url }}" required
+                                        id="image" data-required="true" class="form-control">
                                 </div>
                             </div>
 
@@ -173,61 +115,4 @@
         </div><!-- /pad-wrapper -->
     </div><!-- content -->
     <!-- /main container -->
-
-
-
-
-
-
-
-    <!-- scripts -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/theme.js"></script>
-
-    <script src="js/form/app.js"></script>
-    <script src="js/form/app.plugin.js"></script>
-    <script src="js/form/datepicker/bootstrap-datepicker.js"></script>
-    <script src="js/form/slider/bootstrap-slider.js"></script>
-    <script src="js/form/bootstrap.file-input.js"></script>
-    <script src="js/form/combodate/moment.min.js"></script>
-    <script src="js/form/combodate/combodate.js"></script>
-    <script src="js/form/parsley/parsley.min.js"></script>
-
-
-
-    <script src="js/tables/jquery.peity.min.js"></script>
-    <script src="js/tables/peity-demo.js"></script>
-    <script src="js/tables/icheck.min.js"></script>
-
-    <!--wysiwyg editor -->
-    <script src="js/editor/wysihtml5-0.3.0.js"></script>
-    <script src="js/editor/bootstrap3-wysihtml5.js"></script>
-
-
-    <script type="text/javascript">
-        //wysihtml5
-        $('.textarea').wysihtml5({
-            "font-styles": true, //Font styling, e.g. h1, h2, etc. Default true
-            "emphasis": true, //Italics, bold, etc. Default true
-            "lists": true, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
-            "html": true, //Button which allows you to edit the generated HTML. Default false
-            "link": true, //Button to insert a link. Default true
-            "image": true, //Button to insert an image. Default true,
-            "color": false, //Button to change color of font
-            "size": 'sm' //Button size like sm, xs etc.
-        });
-
-
-        $(document).ready(function () {
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-        });
-    </script>
-
-</body>
-
-
-</html>
+{% endblock content %}

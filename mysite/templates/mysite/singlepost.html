@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div id="wide_bar_bg2" style="width: 78%;">
+<div id="wide_bar_bg2" style="width: 68%;">
     <div class="newsBox" id="news19726" style="margin-bottom:15px;">
 
         <div class="newsHeader" style="direction:ltr !important;">
@@ -16,18 +16,20 @@
 
                 <center>
                     <div class="EspPic">
-                        <img src="{{ post.img }}" alt="{{ post.title }}" title="{{ post.title }}" /></a><span></span>
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" title="{{ post.title }}" /></a><span></span>
                     </div>
                 </center>
                 <p style="direction: ltr;">
                     {{ post.content }}
                 </p>
-                <hr>
+
             </div>
         </div>
-
+        
         <div class="newsFooter newsInfo">
-            <span style="float:left"></span>
+
+            <span style="float:right">{{post.date}}
+            </span>
         </div>
     </div>
 
@@ -88,12 +90,14 @@
             {%csrf_token%}
             <br>
             <label for="comment_name"> Your Name: </label>
-            <input style="direction: ltr;" type="text" name="name" id="comment_name">
+            <input style="direction: ltr; background-color: white !important;  color: white;" required type="text" name="name" id="comment_name">
             <br>
             <label style="direction: ltr;" for="comment_content"> Your Comment: </label>
-            <textarea name="content" maxlength="30" id="comment_content" cols="2" rows="3"></textarea>
-            <button type="submit" class="btn btn-primary"> Submit </button>
-            <div class="alert alert-danger pb-0 collapse {{not_allowed}}">
+            <textarea name="content" required maxlength="30" style="color: white;" id="comment_content" cols="2" rows="3"></textarea>
+            <button type="submit" class="btn btn-primary mt-2"> Submit </button>
+            <br>
+            <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
+                
                 <p> The word "{{ filtered_word }}" is not allowed </p>
             </div>
         </form>

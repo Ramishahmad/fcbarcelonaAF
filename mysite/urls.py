@@ -1,8 +1,11 @@
 
+import django
 from mysite.models import comments
 from mysite.views import   comments1, dashboard_slider, deleteComment, deleteCommentFilter, deletePost, deleteSlider, showComment, updatePost, updateSlider
 from django.urls import path,include
 from mysite.views import index, login1, singlepost, dashboard, addPost
+from django.conf import settings
+
 
 
 
@@ -24,3 +27,4 @@ urlpatterns = [
 
 
 ]
+

@@ -37,7 +37,7 @@
                     <div class="arrow_border"></div>
                 </div>
                 <a href="">
-                    <i class="fa fa-settings"></i>
+                    <i class="fa fa-signal"></i>
                     <span>Comments </span>
                 </a>
             </li>
@@ -138,55 +138,6 @@
 
                 </div>
             </div>
-            <!-- /PRODUCT -->
-
-            <!-- <div class="col-md-6">
-                <div class="panel panel-default post-wrap pro-box">
-                    <div class="panel-heading"><strong>{{addorupdate}}</strong></div>
-                    <form class="form-horizontal" method="POST" action=""
-                        style="padding: 5px !important; margin-top: 5px !important;">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">URL : </label>
-                            <div class="col-lg-8">
-                                <input type="text" name="img_url" maxlength="100" required id="id_title"
-                                    placeholder="Image URL" value="{{ s_img }}" data-required="true"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Name: </label>
-                            <div class="col-lg-8">
-                                <input type="text" name="name" maxlength="100" required id="id_title"
-                                    placeholder="Image Name" value="{{ s_name }}" data-required="true"
-                                    class="form-control">
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-9 pull-right">
-                                <!-- <button type="cancel" class="btn btn-default">Cancel</button> -->
-                                <!-- <button type="submit" class="btn bg-primary">Save Changes</button>
-                                <a href="/dashboard-slider" class="btn" role="button"
-                                    style="color: white; background-color: rgba(81, 160, 81, 0.842);"> New
-                                </a>
-                            </div>
-                        </div>
-                    </form> -->
-<!-- 
-                    <aside class="post-highlight based v-align">
-                        <div class="panel-body text-center">
-                            <div class="pro-thumb" style="height: 220px;">
-                                <img style="height: 200px !important; width: 200px !important;" src="{{ s_img }}"
-                                    alt="">
-                            </div>
-                        </div>
-
-                </div> -->
-            </div> 
-            <!-- /PRODUCT -->
-
-
 
 
             <div class="clearfix"></div>
@@ -205,5 +156,93 @@
         </div><!-- /pad-wrapper -->
     </div><!-- content -->
     <!-- /main container -->
+     <!--post modal-->
+     <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4><strong>Delete Confirmation</strong></h4>
+                </div>
 
+                <div class="modal-body">
+                    <p></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button data-dismiss="modal" class="btn btn-danger btn-sm" id="btnYes"> Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="container">
+        <div id="default">
+            <h1>#{title}</h1>
+            <p>#{text}</p>
+        </div>
+    </div>
+
+ <!-- scripts -->
+ 
+
+    <!-- scripts -->
+    <script src="https://erwinagpasa.com/myxdashboard/js/jquery.min.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/theme.js"></script>
+
+
+    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery.sparkline.min.js"></script>
+
+    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/waypoints.min.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery.counterup.min.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap-modal.js"></script>
+
+    <script src="https://erwinagpasa.com/myxdashboard/js/flot/jquery.flot.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/flot/jquery.flot.resize.js"></script>
+
+    <!-- Upload file drag and drop -->
+    <script src="https://erwinagpasa.com/myxdashboard/js/filedrag/filedrag.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap.file-input.js"></script>
+
+    <!-- notification -->
+    <script src="https://erwinagpasa.com/myxdashboard/js/notify/jquery-ui.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/notify/jquery.notify.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/jquery.slimscroll.js"></script>
+    <!-- <script src="https://erwinagpasa.com/myxdashboardjs/bootstrap_calendar.js"></script> -->
+
+
+    <script src="https://erwinagpasa.com/myxdashboard/js/pizza/snap.svg.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/pizza/pizza.js"></script>
+    <script src="https://erwinagpasa.com/myxdashboard/js/index.js"></script>
+    <script>
+        $('#myModal').on('show', function () {
+            var tit = $('.confirm-delete').data('title');
+
+            //$('#myModal .modal-body p').html("Are you sure you want to delete this record " + '<b>' + tit +'</b>' + ' ?');
+            $('#myModal .modal-body p').html("Are you sure you want to delete this record?");
+            var id = $(this).data('id'),
+                removeBtn = $(this).find('.danger');
+        })
+
+        $('.confirm-delete').on('click', function (e) {
+            e.preventDefault();
+
+            var id = $(this).data('id');
+            $('#myModal').data('id', id).modal('show');
+        });
+
+        $('#btnYes').click(function () {
+            // handle deletion here
+            var id = $('#myModal').data('id');
+            // $('[data-id=' + id  + ']').parents('tr').remove();
+            window.location = "{% url 'delete_comment' 12 %}".replace(/12/, id);
+            $('#myModal').modal('hide');
+
+        });
+    </script>
 {% endblock content %}

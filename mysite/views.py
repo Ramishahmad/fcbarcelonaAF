@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from django.db.models import fields, Q
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import  posts, slider,comments,FilterComments,Login
+from .models import  User, logs, posts, slider,comments,FilterComments,Login
 from .forms import LoginForm, PostForm, SliderForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -170,17 +170,24 @@ def addPost(request):
 def updatePost(request,pid):
     s = posts.objects.get(id=pid)
     form = PostForm(request.POST or None,instance=s)
+    create_log = ''
     if form.is_valid():
         form.save()
+        create_log = logs.objects.create(user=request.user.username,post=s)
+        create_log.save()
         return HttpResponseRedirect(reverse_lazy('dashboard'))
-        
+    
+    log = logs.objects.filter(post=s)
+
     context = {
+        'log':log,
         'form1':form,
         'p_title': s.title,
         'p_img': s.image,
         'p_content': s.content,
+        'p_id':s.id,
     }
-    return render(request,"mysite/addpost1.html",context)
+    return render(request,"mysite/updatepost.html",context)
 
 
 # Function to delete a post 
@@ -287,3 +294,11 @@ def deleteCommentFilter(request,fid):
      s = FilterComments.objects.get(id=fid)
      s.delete()
      return HttpResponseRedirect(reverse_lazy('comments'))
+
+
+def clearLogs(request,lid):
+    s = posts.objects.get(id=lid)
+    log = logs.objects.filter(post=s)
+    log.delete()
+
+    return HttpResponseRedirect(reverse_lazy('dashboard'))

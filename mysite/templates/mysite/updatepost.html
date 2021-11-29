@@ -96,6 +96,29 @@
             </div>
             <!-- /Profile Form -->
 
+            <div class="col-md-4">
+                <div class="panel panel-default post-wrap pro-box">
+                    <div class="panel-heading"><strong> Last Updated </strong></div>
+
+                    <div class="post-info">
+                        <span class="arrow-pro right"></span>
+                        <div class="panel-body">
+                            {% for items in log %}
+                            <p>{{ items.date }}   by:  {{ items.user }}</p> 
+                            <hr>
+                            {% endfor %}
+
+                            <hr>
+                            <a href="{% url 'clear_log' p_id %}" style="text-decoration: none;"> Clear Logs </a>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <!-- </aside> -->
+
+                </div>
             </div>
 
 

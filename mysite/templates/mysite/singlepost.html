@@ -90,7 +90,7 @@
             {%csrf_token%}
             <br>
             <label for="comment_name"> Your Name: </label>
-            <input style="direction: ltr; background-color: white !important;  color: white;" required type="text" name="name" id="comment_name">
+            <input value="{{request.user.username}}"  style="direction: ltr; background-color: white !important;  color: white;" required type="text" name="name" id="comment_name">
             <br>
             <label style="direction: ltr;" for="comment_content"> Your Comment: </label>
             <textarea name="content" required maxlength="30" style="color: white;" id="comment_content" cols="2" rows="3"></textarea>

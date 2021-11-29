@@ -23,7 +23,10 @@ from mysite.views import login1
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/',login1),
+    
+    # Url related to Mysite App
     path('',include('mysite.urls'))
 ]
 
+# Url related to media files
 urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

@@ -4,7 +4,7 @@ from . import models
 
 class PostAdmin(admin.ModelAdmin):
 
-    list_display = ['id','title','date','views']
+    list_display = ['id','title','date','views','image']
     list_display_links = ['id','title']
     list_filter = ['date','views']
 

@@ -27,13 +27,13 @@ class slider(models.Model):
 class posts(models.Model):
 
     title = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='images',null=True,blank=True)
+    image = models.ImageField(null=True,blank=True)
     content = models.TextField(max_length=50000)
     views = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "Title: {}  Views: {} ".format(self.title,self.views)
+        return "Title: {}  Views: {}  image: {}".format(self.title,self.views,self.image.name)
         
     def view(self):
         self.views += 1

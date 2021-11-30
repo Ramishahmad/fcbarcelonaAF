@@ -31,19 +31,19 @@
 
 
 
+            <li>
+                <a href="/comments">
+                    <i class="fa fa-signal"></i>
+                    <span> Comments </span>
+                </a>
+            </li>
+
             <li class="active">
                 <div class="pointer">
                     <div class="arrow"></div>
                     <div class="arrow_border"></div>
                 </div>
                 <a href="">
-                    <i class="fa fa-signal"></i>
-                    <span>Comments </span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/manage">
                     <i class="fa fa-signal"></i>
                     <span> Manage </span>
                 </a>
@@ -62,7 +62,7 @@
             <!-- ORDER TABLE -->
             <div class="col-md-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>Comments</strong> <a href="#" class="pull-right"></a>
+                    <div class="panel-heading"><strong> Unused Files </strong> <a href="#" class="pull-right"></a>
                     </div>
                     <div class="panel-body no-padding">
 
@@ -71,25 +71,24 @@
 
 
                                 <tbody>
-                                    {% for item in comments reversed %}
+                                    {% for item in lists reversed %}
                                     <tr>
 
                                         <td>
-                                            <p><strong>{{item.post.title}}</strong></p>
+                                            <p><strong><a href="/media/{{item}}" target="blank">{{ item }}</a></strong></p>
                                         </td>
 
-                                        <td class="purchased">{{item.content}}</td>
-                                        <td><span class="label" style="background-color: {{item.show_comment_color}};"> {{item.show_comment_label}} </span></td>
+                                        <td class="purchased"></td>
+                                        <td><span class="label" >  </span></td>
                                         <td class="text-right">
-                                            <a style="display:{{item.show_comments}};" class="btn" href="{% url 'show_comment' item.id %}"><i
-                                                    class="fa fa-pencil-square-o"></i></a>
-                                            <a href="#" class="confirm-delete btn" role="button"
+                                            <a href="{% url 'delete_unused_image' item %}" class="btn" role="button"
                                                 data-title="{{item.name}}" data-id="{{item.id}}">
 
                                                 <i class="fa fa-trash-o"></i></a>
                                         </td>
                                     </tr>
                                     {% endfor %}
+                                    <td> <a style="color: chocolate;" href="{% url 'delete_unused_image_all'%}"> Delete All </a> </td>
                                 </tbody>
 
                             </table>
@@ -101,50 +100,7 @@
             </div>
             <!-- /ORDER TABLE -->
 
-            
-            <!-- PRODUCT -->
-            <div class="col-md-6">
-                <div class="panel panel-default post-wrap pro-box">
-                    <div class="panel-heading"><strong> Filter Comments </strong></div>
-
-                    <div class="post-info"
-                        style="overflow:hidden; text-overflow:ellipsis;  display: -webkit-box; -webkit-line-clamp: 5; line-clamp: 5; -webkit-box-orient: vertical;">
-                        <span class="arrow-pro right"></span>
-                        <div class="panel-body">
-                            <form class="form-horizontal" method="POST" action=""
-                            style="padding: 1px !important; margin-top: 5px !important;">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">Filter : </label>
-                                <div class="col-lg-5">
-                                    <input type="text" name="name" maxlength="20" required id="id_title"
-                                        placeholder=" Enter the word to filter" value="" data-required="true"
-                                        class="form-control">
-                                </div>
-                                <div class="col-lg-1">
-                                    <!-- <button type="cancel" class="btn btn-default">Cancel</button> -->
-                                    <button type="submit" class="btn btn-sm bg-primary">Add Filter</button>
-                                   
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="desk based" style="display: flex; flex-wrap: wrap;">
-                            {% for items in filters %}
-                                <span class="label" style="background-color: rgb(151, 146, 146); margin-right: 2px; font-size: 1em; margin-bottom: 4px;"> {{items.name}}
-                                <a href="{% url 'delete_comment_filter' items.id %}" style="color: rgba(240, 37, 37, 0.959); margin-left: 3px;" > <strong>x</strong>  </a>
-                                </span>  
-                               {% endfor %}
-                                
-                                
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <!-- </aside> -->
-
-                </div>
-            </div>
+           
 
 
             <div class="clearfix"></div>

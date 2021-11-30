@@ -5,6 +5,8 @@ from .models import  User, logs, posts, slider,comments,FilterComments,Login
 from .forms import LoginForm, PostForm, SliderForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+import os
+from website import settings
 
 
 # Global Variables
@@ -302,3 +304,44 @@ def clearLogs(request,lid):
     log.delete()
 
     return HttpResponseRedirect(reverse_lazy('dashboard'))
+
+
+def manage(request):
+    post=posts.objects.all()
+    image = os.listdir('media')
+    lists = []
+    for files in image:
+        y = str(post).find(files)
+
+        if y == -1:
+            lists.append(files)
+    
+
+    # list1 = set(lists)
+    # print(list1)
+
+    context = {
+        'lists':lists
+    }    
+
+    return render(request,'mysite/manage.html',context)
+
+
+def deleteUnusedImages(request,image):
+    os.remove("media/" + image)
+
+    return HttpResponseRedirect(reverse_lazy('manage'))
+
+
+
+def deleteUnusedImageAll(request):
+
+    post=posts.objects.all()
+    image = os.listdir('media')
+
+    for files in image:
+        y = str(post).find(files)
+        if y == -1:
+            os.remove("media/" + files)
+
+    return HttpResponseRedirect(reverse_lazy('manage'))

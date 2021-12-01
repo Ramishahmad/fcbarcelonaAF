@@ -18,11 +18,12 @@ from django.urls import path
 from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
-from mysite.views import login1
+from mysite.views import login1, logout1
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/',login1),
+    path('login/',login1, name='login'),
+    path('logout/',logout1, name='logout'),
     
     # Url related to Mysite App
     path('',include('mysite.urls'))

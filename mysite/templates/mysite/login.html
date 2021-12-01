@@ -28,7 +28,7 @@
     <div class="shadow-lg container-fluid d-flex justify-content-center align-items-center"
         style="height: 100%; width: 100%; position: absolute;">
         <div id="loginform" class="shadow-lg d-flex justify-content-center align-items-center p-5 pb-2">
-
+            {% if not request.user.is_authenticated %}
             <form method="POST">
                 {%csrf_token%}
                 <div class="d-flex justify-content-center align-items-center mb-3">
@@ -48,9 +48,14 @@
                     <button type="submit" class="btn btn-primary mb-3">Login</button>
                 </div>
                 <div class="alert alert-danger pb-0 collapse {{ invalid }}">
-                    <p>Invalid Username or Password</p>
+                    <p>{{Error}}</p>
+                </div>
+                {% else %}
+                <div class="alert alert-danger pb-0">
+                    <p> You are already logged in, Would you like to <a href="/logout">Logout ?</a> </p>
                 </div>
             </form>
+            {% endif %}
 
         </div>
     </div>

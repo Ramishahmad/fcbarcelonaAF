@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from django.contrib import auth
 from django.db.models import fields, Q
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import  User, logs, posts, slider,comments,FilterComments,Login
@@ -7,6 +8,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 import os
 from website import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login,authenticate, logout
 
 
 # Global Variables
@@ -100,35 +103,30 @@ def login1(request):
     
     invalid = ""
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            
-            uname = form['uname'].value()
-            pwd = form['pwd'].value()
-        s = Login.objects.all()
-    try:
-        for item in s:
-            if uname == item.uname and pwd == item.pwd:
+        uname = request.POST.get('uname')
+        pwd = request.POST.get('pwd')
+        user = authenticate(request,username=uname,password=pwd)
+        if user is None:
+            invalid = "show"
+            context = {
+            'Error': 'Invalid Username or Password',
+            'invalid':invalid
+            }
+            return render(request,'mysite/login.html',context)
+    
+        login(request,user)
                 
-                global colapse
-                colapse =  "show"
-                
-                return HttpResponseRedirect(reverse_lazy('dashboard'))
-            else:
-                invalid = "show"
-                colapse = ""
+        return redirect(reverse_lazy('dashboard'))
 
-    except:
-        pass
+    return render(request,'mysite/login.html')
 
-    context = {
-        'invalid':invalid,
-        'colapse':colapse,
-    }
-    return render(request,'mysite/login.html',context)
 
+def logout1(request):
+        logout(request)
+        return redirect(reverse_lazy('login'))
 
 # Function for dashboard page
+@login_required
 def dashboard(request):
     post = posts.objects.all()
     post_count = 0
@@ -151,6 +149,7 @@ def dashboard(request):
 
 
 # Function to add new post
+@login_required
 def addPost(request):
     form = PostForm(request.POST or None)
     if request.method == 'POST':
@@ -169,6 +168,7 @@ def addPost(request):
 
 
 # Function to update a post 
+@login_required
 def updatePost(request,pid):
     s = posts.objects.get(id=pid)
     form = PostForm(request.POST or None,instance=s)
@@ -193,6 +193,7 @@ def updatePost(request,pid):
 
 
 # Function to delete a post 
+@login_required
 def deletePost(request,pid):
      s = posts.objects.get(id=pid)
      s.delete()
@@ -200,6 +201,7 @@ def deletePost(request,pid):
     
 
 # Function for slider dashboard
+@login_required
 def dashboard_slider(request):
         slide = slider.objects.all()
         form = SliderForm(request.POST or None)
@@ -220,6 +222,7 @@ def dashboard_slider(request):
 
 
 # Function to update a slider image
+@login_required
 def updateSlider(request,sid):
     slide = slider.objects.all()
     s = slider.objects.get(id=sid)
@@ -242,6 +245,7 @@ def updateSlider(request,sid):
 
 
 # Function to delete a slider image 
+@login_required
 def deleteSlider(request,sid):
      s = slider.objects.get(id=sid)
      s.delete()
@@ -249,6 +253,7 @@ def deleteSlider(request,sid):
 
 
 # Function for Comment page 
+@login_required
 def comments1(request):
      
     comment = comments.objects.all()
@@ -274,6 +279,7 @@ def comments1(request):
     return render(request,"mysite/comments.html",context)
 
 
+@login_required
 def showComment(request,cid):
 
     comment = comments.objects.get(id=cid)
@@ -286,18 +292,21 @@ def showComment(request,cid):
     return redirect(reverse_lazy('comments'))
 
 
+@login_required
 def deleteComment(request,cid):
      s = comments.objects.get(id=cid)
      s.delete()
      return HttpResponseRedirect(reverse_lazy('comments'))
 
 
+@login_required
 def deleteCommentFilter(request,fid):
      s = FilterComments.objects.get(id=fid)
      s.delete()
      return HttpResponseRedirect(reverse_lazy('comments'))
 
 
+@login_required
 def clearLogs(request,lid):
     s = posts.objects.get(id=lid)
     log = logs.objects.filter(post=s)
@@ -306,34 +315,43 @@ def clearLogs(request,lid):
     return HttpResponseRedirect(reverse_lazy('dashboard'))
 
 
+@login_required
 def manage(request):
     post=posts.objects.all()
     image = os.listdir('media')
     lists = []
+    filesize = 0
+    sizes = []
     for files in image:
         y = str(post).find(files)
 
         if y == -1:
             lists.append(files)
+            size = os.path.getsize("media/" + files)/1024
+            sizes.append(size)  
     
+    for nums in sizes:
+        filesize += nums
 
-    # list1 = set(lists)
-    # print(list1)
+    filesize = "{:.2f}".format(filesize)
 
     context = {
-        'lists':lists
+        'lists':lists,
+        'filesize':filesize,
+        'sizes':sizes
     }    
 
     return render(request,'mysite/manage.html',context)
 
 
+@login_required
 def deleteUnusedImages(request,image):
     os.remove("media/" + image)
 
     return HttpResponseRedirect(reverse_lazy('manage'))
 
 
-
+@login_required
 def deleteUnusedImageAll(request):
 
     post=posts.objects.all()

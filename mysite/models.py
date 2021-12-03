@@ -26,11 +26,17 @@ class slider(models.Model):
 # Table for posts 
 class posts(models.Model):
 
+    
+    class Meta:
+        ordering = ['priority']
+
     title = models.CharField(max_length=100)
     image = models.ImageField(null=True,blank=True)
     content = models.TextField(max_length=50000)
     views = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
+    draft = models.BooleanField(default=False,blank=True)
+    priority = models.BooleanField(default=False,blank=True)
 
     def __str__(self):
         return "Title: {}  Views: {}  image: {}".format(self.title,self.views,self.image.name)

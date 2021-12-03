@@ -1,6 +1,6 @@
-from abc import abstractmethod
 from django.contrib import auth
 from django.db.models import fields, Q
+from django.db.models.expressions import OrderBy
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import  User, logs, posts, slider,comments,FilterComments,Login
 from .forms import LoginForm, PostForm, SliderForm
@@ -125,14 +125,30 @@ def logout1(request):
         logout(request)
         return redirect(reverse_lazy('login'))
 
+
 # Function for dashboard page
 @login_required
 def dashboard(request):
     post = posts.objects.all()
+    slide = slider.objects.all()
     post_count = 0
+    slides_count = 0
     post_views = 0
+
+    for items in slide:
+        slides_count += 1
+
     for item in post:
         item = item
+
+        if item.draft == True:
+            item.draft_or_published = 'Draft'
+            item.draft_color = 'red'
+            post_count -= 1
+        else:
+            item.draft_or_published = 'Published'
+            item.draft_color = 'green'
+
         post_count = post_count + 1  
         post_views = post_views+item.views          
     
@@ -143,7 +159,8 @@ def dashboard(request):
         'num_visits':num_visits,
         'post_count':post_count,
         'slides':slides, 
-        'post_views':post_views
+        'post_views':post_views,
+        'slides_count':slides_count
            }
     return render(request,'mysite/dashboard.html',context)
 
@@ -156,8 +173,19 @@ def addPost(request):
         title = request.POST.get('title')
         image = request.FILES['image']
         content = request.POST.get('content')
-
+        draft = request.POST.get('draft')
+        priority = request.POST.get('priority')
+        # print(request.POST)
         post = posts.objects.create(title=title,image=image,content=content)
+        if draft == None:
+            post.draft = False
+        else:
+            post.draft = True
+
+        if priority == None:
+            post.priority = False
+        else:
+            post.priority = True
         post.save()
         return HttpResponseRedirect(reverse_lazy('dashboard'))
     
@@ -171,10 +199,35 @@ def addPost(request):
 @login_required
 def updatePost(request,pid):
     s = posts.objects.get(id=pid)
-    form = PostForm(request.POST or None,instance=s)
     create_log = ''
-    if form.is_valid():
-        form.save()
+    draft_check = ''
+    priority_check = ''
+    if s.draft == True:
+        draft_check = 'checked'
+
+    if s.priority == True:
+        priority_check = 'checked'
+    if request.method == 'POST':
+        draft = request.POST.get('draft')
+        priority = request.POST.get('priority')
+        titles = request.POST.get('title')
+        contents = request.POST.get('content')
+        images = request.FILES['image']
+
+        s.title = titles
+        s.content = contents
+        s.image = images
+        if draft == None:
+            s.draft = False
+        else:
+            s.draft = True
+            
+        if priority == None:
+            s.priority = False
+        else:
+            s.priority = True
+        s.save()
+        
         create_log = logs.objects.create(user=request.user.username,post=s)
         create_log.save()
         return HttpResponseRedirect(reverse_lazy('dashboard'))
@@ -182,8 +235,10 @@ def updatePost(request,pid):
     log = logs.objects.filter(post=s)
 
     context = {
+        's':s,
         'log':log,
-        'form1':form,
+        'draft_check':draft_check,
+        'priority_check':priority_check,
         'p_title': s.title,
         'p_img': s.image,
         'p_content': s.content,

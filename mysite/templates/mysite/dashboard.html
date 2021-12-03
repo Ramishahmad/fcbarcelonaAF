@@ -147,7 +147,7 @@
 
                             <div class="statis">
                                 <i class="fa fa-arrow-circle sign txt-color-orange"></i>
-                                <span class="counter">{{slides}}</span>
+                                <span class="counter">{{slides_count}}</span>
                                 <p>Slides</p>
                             </div> <!-- /statis -->
                         </div>
@@ -180,7 +180,7 @@
 
                     </div>
                     <div class="m-1 p-1" style="margin: 10px; display: flex; flex-direction: row-reverse;">
-                        <a class="btn-sm bg-primary" style="text-decoration: none; color: white;"
+                        <a target="blank" class="btn-sm bg-primary" style="text-decoration: none; color: white;"
                             href="{% url 'post_url' item.id %}">Go to Post</a>
                     </div>
                     <!-- </aside> -->
@@ -214,12 +214,12 @@
                                 <tbody>
                                     {% for item in post reversed %}
                                     <tr>
-                                        <td>{{item.title}}</td>
+                                        <td>{{item.title}} {% if item.priority %} <span style="color: green;">*</span> {% endif %}</td>
                                         <td class="purchased"></td>
                                         <td class="purchased"></td>
                                         <td class="purchased"></td>
                                         <td class="purchased"></td>
-                                        <td><span class="label label-success"> Published </span></td>
+                                        <td><span class="label" style="background-color: {% if item.draft %} red {% else %} green {% endif %};"> {% if item.draft %} Draft {% else %} Published {% endif %} </span></td>
                                         <td><span class="label label-primary"> Views: {{item.views}} </span></td>
                                         <td class="text-right">
                                             <a class="btn" href="{% url 'update_post' item.id %}"><i

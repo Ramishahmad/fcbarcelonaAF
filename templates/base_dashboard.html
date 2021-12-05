@@ -38,6 +38,9 @@
             height: 2em !important;
         }
     </style>
+    {% block style %}
+    
+    {% endblock style %}
 </head>
 
 <body>
@@ -55,7 +58,10 @@
                     src="https://www.fcbarcelona.ir/index/themes/Barca 2016/images/Slogan.png" alt="logo"
                     class="logo" /></a>
         </div>
-
+        <div style="margin-top: 13px; padding: 5px; margin-left: 91%;">
+            <span> {{user}} -</span>
+            <a href="/logout" style="margin-right: 0; margin-left: 1px; margin-top: 5px;"> Logout</a>
+        </div>
     </header>
 
 

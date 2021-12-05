@@ -1,6 +1,5 @@
 from django.contrib import auth
 from django.db.models import fields, Q
-from django.db.models.expressions import OrderBy
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import  User, logs, posts, slider,comments,FilterComments,Login
 from .forms import LoginForm, PostForm, SliderForm
@@ -10,7 +9,7 @@ import os
 from website import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,authenticate, logout
-
+ 
 
 # Global Variables
 colapse = ""
@@ -37,7 +36,7 @@ def index(request):
     
     }
 
-    return render(request,'mysite/index1.html',context)
+    return render(request,'website/index1.html',context)
 
 
 # Function for detail view of post
@@ -95,7 +94,7 @@ def singlepost(request,pid):
         'views':views
 
     }   
-    return render(request,"mysite/singlepost.html",context)
+    return render(request,"website/singlepost.html",context)
 
 
 # function for login page
@@ -118,9 +117,10 @@ def login1(request):
                 
         return redirect(reverse_lazy('dashboard'))
 
-    return render(request,'mysite/login.html')
+    return render(request,'dashboard/login.html')
 
 
+# function for logout
 def logout1(request):
         logout(request)
         return redirect(reverse_lazy('login'))
@@ -162,7 +162,7 @@ def dashboard(request):
         'post_views':post_views,
         'slides_count':slides_count
            }
-    return render(request,'mysite/dashboard.html',context)
+    return render(request,'dashboard/dashboard.html',context)
 
 
 # Function to add new post
@@ -192,7 +192,7 @@ def addPost(request):
     context = {
         'form1':form
     }
-    return render(request,"mysite/addpost1.html",context)
+    return render(request,"dashboard/addpost1.html",context)
 
 
 # Function to update a post 
@@ -244,7 +244,7 @@ def updatePost(request,pid):
         'p_content': s.content,
         'p_id':s.id,
     }
-    return render(request,"mysite/updatepost.html",context)
+    return render(request,"dashboard/updatepost.html",context)
 
 
 # Function to delete a post 
@@ -273,7 +273,7 @@ def dashboard_slider(request):
         'form':form,
         'addnew':addnew
     }
-        return render(request,'mysite/dashboard_slider.html',context)
+        return render(request,'dashboard/dashboard_slider.html',context)
 
 
 # Function to update a slider image
@@ -296,7 +296,7 @@ def updateSlider(request,sid):
         's_img': s.img_url,
         'addnew':addnew
     }
-    return render(request,"mysite/dashboard_slider.html",context)
+    return render(request,"dashboard/dashboard_slider.html",context)
 
 
 # Function to delete a slider image 
@@ -318,12 +318,8 @@ def comments1(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         filters = FilterComments.objects.create(name=name)
-        filters.save
+        filters.save()
         return redirect(reverse_lazy('comments'))
-    # show_comment = comments.objects.filter(show_comment=True)
-    # show_comments = "none"
-    # if (show_comment==True):
-    #     show_comments = "hidden"
 
         
     context = {
@@ -331,7 +327,7 @@ def comments1(request):
         'comments':comment,
         'filters':filtercomments,
      }
-    return render(request,"mysite/comments.html",context)
+    return render(request,"dashboard/comments.html",context)
 
 
 @login_required
@@ -396,7 +392,7 @@ def manage(request):
         'sizes':sizes
     }    
 
-    return render(request,'mysite/manage.html',context)
+    return render(request,'dashboard/manage.html',context)
 
 
 @login_required

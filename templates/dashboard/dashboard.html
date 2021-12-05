@@ -1,64 +1,7 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>MYX Dashboard</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- bootstrap -->
-    <link href="https://erwinagpasa.com/myxdashboard/css/bootstrap.css" rel="stylesheet" />
-    <link href="https://erwinagpasa.com/myxdashboard/css/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
-
-    <!-- theme -->
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/theme/default.css" />
-
-    <!-- libraries -->
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/dashboard.css" />
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/notify.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://erwinagpasa.com/myxdashboard/css/elements/bootstrap_calendar.css" />
-    <link rel="stylesheet" type="text/css" href="https://erwinagpasa.com/myxdashboard/css/elements/pizza.css" />
+{% extends 'base_dashboard.html' %}
 
 
-
-    <!-- open sans font -->
-    <link
-        href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
-        rel='stylesheet' type='text/css' />
-
-    <script src="https://kit.fontawesome.com/4755752317.js" crossorigin="anonymous"></script>
-    <style>
-        .navbar-brand img.logo {
-            width: 10em !important;
-            height: 2em !important;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- navbar -->
-    <header class="navbar navbar-inverse navbar-fixed-top" role="banner">
-        <div class="navbar-header">
-            <button class="navbar-toggle" type="button" data-toggle="collapse" id="menu-toggler">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html"><img
-                    src="https://www.fcbarcelona.ir/index/themes/Barca 2016/images/Slogan.png" alt="logo"
-                    class="logo" /></a>
-        </div>
-        <div style="margin-top: 13px; padding: 5px; margin-left: 91%;">
-            <span> {{user}} -</span>
-            <a href="/logout" style="margin-right: 0; margin-left: 1px; margin-top: 5px;"> Logout</a>
-        </div>
-    </header>
-    <!-- end navbar -->
-
+{% block content %}
     <!-- sidebar -->
     <div id="sidebar-nav">
 
@@ -290,47 +233,42 @@
         </div>
     </div>
 
-    <!-- Notification -->
-    <div id="container">
-        <div id="default">
-            <h1>#{title}</h1>
-            <p>#{text}</p>
-        </div>
-    </div>
+    
+        <!-- scripts -->
+        <script src="https://erwinagpasa.com/myxdashboard/js/jquery.min.js"></script>
+     <!-- scripts -->
+     <script src="https://erwinagpasa.com/myxdashboard/js/jquery.min.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/theme.js"></script>
+ 
+ 
+     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery-jvectormap-1.2.2.min.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery-jvectormap-world-mill-en.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery.sparkline.min.js"></script>
+ 
+     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/waypoints.min.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery.counterup.min.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap-modal.js"></script>
+ 
+     <script src="https://erwinagpasa.com/myxdashboard/js/flot/jquery.flot.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/flot/jquery.flot.resize.js"></script>
+ 
+     <!-- Upload file drag and drop -->
+     <script src="https://erwinagpasa.com/myxdashboard/js/filedrag/filedrag.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap.file-input.js"></script>
+ 
+     <!-- notification -->
+     <script src="https://erwinagpasa.com/myxdashboard/js/notify/jquery-ui.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/notify/jquery.notify.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/jquery.slimscroll.js"></script>
+     <!-- <script src="https://erwinagpasa.com/myxdashboardjs/bootstrap_calendar.js"></script> -->
+ 
+ 
+     <script src="https://erwinagpasa.com/myxdashboard/js/pizza/snap.svg.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/pizza/pizza.js"></script>
+     <script src="https://erwinagpasa.com/myxdashboard/js/index.js"></script>
 
 
-
-    <!-- scripts -->
-    <script src="https://erwinagpasa.com/myxdashboard/js/jquery.min.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/theme.js"></script>
-
-
-    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery.sparkline.min.js"></script>
-
-    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/waypoints.min.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery.counterup.min.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap-modal.js"></script>
-
-    <script src="https://erwinagpasa.com/myxdashboard/js/flot/jquery.flot.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/flot/jquery.flot.resize.js"></script>
-
-    <!-- Upload file drag and drop -->
-    <script src="https://erwinagpasa.com/myxdashboard/js/filedrag/filedrag.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap.file-input.js"></script>
-
-    <!-- notification -->
-    <script src="https://erwinagpasa.com/myxdashboard/js/notify/jquery-ui.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/notify/jquery.notify.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/jquery.slimscroll.js"></script>
-    <!-- <script src="https://erwinagpasa.com/myxdashboardjs/bootstrap_calendar.js"></script> -->
-
-
-    <script src="https://erwinagpasa.com/myxdashboard/js/pizza/snap.svg.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/pizza/pizza.js"></script>
-    <script src="https://erwinagpasa.com/myxdashboard/js/index.js"></script>
     <script>
         $('#myModal').on('show', function () {
             var tit = $('.confirm-delete').data('title');
@@ -358,6 +296,4 @@
         });
     </script>
 
-</body>
-
-</html>
+{% endblock content %}

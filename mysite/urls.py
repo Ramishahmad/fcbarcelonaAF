@@ -1,6 +1,6 @@
 
 from mysite.models import comments
-from mysite.views import   clearLogs, comments1, dashboard_slider, deleteComment, deleteCommentFilter, deletePost, deleteSlider, deleteUnusedImageAll, deleteUnusedImages, manage, showComment, updatePost, updateSlider
+from mysite.views import   clearLogs, comments1, dashboard_slider, deleteComment, deleteCommentFilter, deletePost, deleteSlider, deleteUnusedImageAll, deleteUnusedImages, manage, replayComment, showComment, updatePost, updateSlider
 from django.urls import path,include
 from mysite.views import index, login1, singlepost, dashboard, addPost
 from django.conf import settings
@@ -35,7 +35,9 @@ urlpatterns = [
     path('<image>/delete-unused-image/',deleteUnusedImages,name='delete_unused_image'),
     path('delete-unused-image-all/',deleteUnusedImageAll,name='delete_unused_image_all'),
     
-    path('manage/',manage, name='manage')
+    path('manage/',manage, name='manage'),
+
+    path('replaycomment/',replayComment, name='replay_comment')
 
 
 

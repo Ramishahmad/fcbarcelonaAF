@@ -1,11 +1,14 @@
 from django.contrib import auth
 from django.db.models import fields, Q
+from django.db.models.expressions import F
+from django.forms.utils import to_current_timezone
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import  User, logs, posts, slider,comments,FilterComments,Login
+from .models import  User, comments_replays, logs, posts, slider,comments,FilterComments,Login
 from .forms import LoginForm, PostForm, SliderForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 import os
+from django.utils.timesince import timesince
 from website import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,authenticate, logout
@@ -16,6 +19,23 @@ colapse = ""
 num_visits = 0
 slides = 0
 addnew = " "
+
+def temporary(request):
+    post = posts.objects.all()
+    
+    for item1 in post:
+        times = timesince(item1.update)
+        if item1.temporary:
+            if ('day') in times:
+                item1.delete()
+
+            if ('week') in times:
+                item1.delete()
+
+            if ('month') in times:
+                item1.delete()
+    return {'hi':'hi'}
+
 
 # Function for index page
 def index(request):
@@ -46,6 +66,7 @@ def singlepost(request,pid):
     post1 = posts.objects.all() 
     post = posts.objects.get(id=pid)
     filtercomment = FilterComments.objects.all()
+    # comment = comments_replays.objects.all()
     not_allowed = " "
     filtered_word = " "
     filtered = False
@@ -54,9 +75,9 @@ def singlepost(request,pid):
         content = request.POST.get('content')
         # name1 = request.user.username
 
-        # for items in filtercomment:
-        #     if content in items.name:
-        #         filtered = True
+        for items in filtercomment:
+            if content in items.name:
+                filtered = True
 
         for items in filtercomment:
             x =  content.find(items.name)
@@ -73,21 +94,24 @@ def singlepost(request,pid):
                     commentnew = comments.objects.create(name=name1,content=content,post=post)
                     commentnew.save()
                     return HttpResponseRedirect('/post/{}'.format(post.id))
+
                 
         
 
     
-    comment = comments.objects.filter(post__id=pid,show_comment=True)
-    
+    comment1 = comments.objects.filter(post__id=pid,show_comment=True)
+
+    comment_replay = comments_replays.objects.all()
+
     post2 = get_object_or_404(posts,id=pid)
     post2.view()
     post2.save()
     views = post2.views
-
     context = {
+        'comment_replay':comment_replay,
         'filtered_word':filtered_word,
         'not_allowed':not_allowed,
-        'comments':comment,
+        'comments':comment1,
         'slide':slide,
         'post':post,
         'post1':post1, 
@@ -131,6 +155,24 @@ def logout1(request):
 def dashboard(request):
     post = posts.objects.all()
     slide = slider.objects.all()
+    item = []
+    # added = posts.objects.all().first().added_on
+
+    # added = added.split()
+    # added_on = added.pop(0)     
+
+    # code for temporary posts
+    # for item1 in post:
+    #     if item1.temporary:
+    #         if ('day') in item1.added_on:
+    #             item1.delete()
+
+    #         if ('week') in item1.added_on:
+    #             item1.delete()
+
+    #         if ('month') in item1.added_on:
+    #             item1.delete()
+
     post_count = 0
     slides_count = 0
     post_views = 0
@@ -153,6 +195,7 @@ def dashboard(request):
         post_views = post_views+item.views          
     
     context = {
+        # 'added':added_on,
         'post':post,
         'colapse':colapse,
         'item':item,
@@ -175,18 +218,29 @@ def addPost(request):
         content = request.POST.get('content')
         draft = request.POST.get('draft')
         priority = request.POST.get('priority')
+        temporary = request.POST.get('temporary')
+
         # print(request.POST)
-        post = posts.objects.create(title=title,image=image,content=content)
+        post = posts.objects.create(title=title,image=image,content=content)        
+
         if draft == None:
             post.draft = False
         else:
             post.draft = True
 
+
         if priority == None:
             post.priority = False
         else:
             post.priority = True
+
+        if temporary == None:
+            post.temporary = False
+        else:
+            post.temporary = True
+            
         post.save()
+
         return HttpResponseRedirect(reverse_lazy('dashboard'))
     
     context = {
@@ -213,10 +267,12 @@ def updatePost(request,pid):
         titles = request.POST.get('title')
         contents = request.POST.get('content')
         images = request.FILES['image']
+        temporary = request.POST.get('temporary')
 
         s.title = titles
         s.content = contents
         s.image = images
+
         if draft == None:
             s.draft = False
         else:
@@ -226,6 +282,11 @@ def updatePost(request,pid):
             s.priority = False
         else:
             s.priority = True
+
+        if temporary == None:
+            s.temporary = False
+        else:
+            s.temporary = True
         s.save()
         
         create_log = logs.objects.create(user=request.user.username,post=s)
@@ -414,3 +475,21 @@ def deleteUnusedImageAll(request):
             os.remove("media/" + files)
 
     return HttpResponseRedirect(reverse_lazy('manage'))
+
+
+
+def replayComment(request):
+    replay_comment = comments_replays.objects.all()
+    if request.method == 'POST':
+
+        post_id = request.POST.get('post_id')
+        replay_name = request.POST.get('replay_name')
+        replay_content = request.POST.get('replay_content')
+        comment_id = request.POST.get('comment_id')
+
+        if (replay_name != ""):
+            if (replay_content != ""):
+                    replay_commentnew = comments_replays.objects.create(name=replay_name,content=replay_content,comment_id=comment_id)
+                    replay_commentnew.save()
+                    return HttpResponseRedirect('/post/{}'.format(post_id))
+                

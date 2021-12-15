@@ -120,6 +120,9 @@
                                             <hr>
                                             <input type="checkbox" name="priority" {{priority_check}} id="priority" class="" value="True" >
                                             <label for="priority" style="font-size: 1.2em;"> Priorize (show always at top) </label>
+                                            <hr>
+                                            <input type="checkbox" name="temporary" {% if s.temporary %} checked {% endif %} id="temporary" class="" value="True" >
+                                            <label for="temporary" style="font-size: 1.2em;"> Set as Temporary (will be deleted after 24 hrs) </label>
                                         </div>
                                         <hr>
                                     </div>

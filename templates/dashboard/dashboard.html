@@ -124,7 +124,7 @@
                     </div>
                     <div class="m-1 p-1" style="margin: 10px; display: flex; flex-direction: row-reverse;">
                         <a target="blank" class="btn-sm bg-primary" style="text-decoration: none; color: white;"
-                            href="{% url 'post_url' item.id %}">Go to Post</a>
+                            href="{% if item %}{% url 'post_url' item.id %}{% endif %}"> Go to post </a>
                     </div>
                     <!-- </aside> -->
                     <aside class="post-highlight based v-align">

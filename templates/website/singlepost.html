@@ -51,7 +51,8 @@
                 <th style="text-align:right;">{{ post.tilte }}</th>
                 <th class="middle" style="width: 35px; text-align: center; padding: 0px;"><a href="#"
                         title="نظر شماره {{ comments.id}}"><img
-                            src="https://www.fcbarcelona.ir/index/images/icons/no_posticon.gif" alt="" /></a>
+                            src="https://www.fcbarcelona.ir/index/images/icons/no_posticon.gif" alt="" />
+                        </a>
                 </th>
             </tr>
             <tr>
@@ -59,7 +60,8 @@
 
                 <td class="difRowDarker" style="padding:0px;">
                     <div id="commentPoster"
-                        style="background:url('user.jpg') center top no-repeat; background-size:cover;">
+                        style="background:url('http://127.0.0.1:8000/media/rose-orange_C8vlTzi.jpg') center top no-repeat; background-size:cover;">
+                        <hr>
                         <div id="commentPosterRankImg">
                         </div>
                     </div>
@@ -74,9 +76,46 @@
 
 
                     &nbsp;
+                    <!-- code for comment replays -->
+                    <hr>
+                    {% for replay in comment_replay %}
+                    {% if replay.comment.id == items.id %}
+                    <p>
+                        <strong>
+                            <a href="#" style="color: chocolate;">
 
+                                {{replay.name}}
+                            </strong>
+                        </a>
+                        <strong>
+                            {{replay.content}}
+                        </strong>
+                    </p>
+                    <hr>
+                    {% endif %}
+                    {% endfor %}
 
-
+                    <!-- end of code for comment replays  -->
+    <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
+        <form action="{% url 'replay_comment' %}" method="POST">
+            {%csrf_token%}
+            <br>
+            <input type="text" name="comment_id" value="{{ items.id }}" style="display: none;">
+            <input type="text" name="post_id" value="{{ post.id }}" style="display: none;">
+            <label for="replay_name"> Your Name: </label>
+            <input value="{{request.user.username}}"  style="direction: ltr; background-color: white !important;  color: black;" required type="text" name="replay_name" id="replay_name">
+            <br>
+            <label style="direction: ltr;" for="replay_content"> Your Comment: </label>
+            <textarea name="replay_content" required maxlength="30" style="color: white;" id="replay_content" cols="2" rows="2"></textarea>
+            <button type="submit" class="btn btn-primary mt-2"> Submit </button>
+            <br>
+            <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
+                
+                
+                <p> The word "{{ filtered_word }}" is not allowed </p>
+            </div>
+        </form>
+    </div>
                 </td>
             </tr>
         </table>
@@ -90,7 +129,7 @@
             {%csrf_token%}
             <br>
             <label for="comment_name"> Your Name: </label>
-            <input value="{{request.user.username}}"  style="direction: ltr; background-color: white !important;  color: white;" required type="text" name="name" id="comment_name">
+            <input value="{{request.user.username}}"  style="direction: ltr; background-color: white !important;  color: black;" required type="text" name="name" id="comment_name">
             <br>
             <label style="direction: ltr;" for="comment_content"> Your Comment: </label>
             <textarea name="content" required maxlength="30" style="color: white;" id="comment_content" cols="2" rows="3"></textarea>

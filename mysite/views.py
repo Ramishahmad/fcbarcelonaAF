@@ -20,6 +20,8 @@ num_visits = 0
 slides = 0
 addnew = " "
 
+
+# function for temporary posts and is added on context preprocessors
 def temporary(request):
     post = posts.objects.all()
     
@@ -134,7 +136,7 @@ def login1(request):
             'Error': 'Invalid Username or Password',
             'invalid':invalid
             }
-            return render(request,'mysite/login.html',context)
+            return render(request,'dashboard/login.html',context)
     
         login(request,user)
                 

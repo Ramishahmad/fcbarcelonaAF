@@ -24,15 +24,14 @@ def temporary(request):
     post = posts.objects.all()
     
     for item1 in post:
-        times = timesince(item1.update)
         if item1.temporary:
-            if ('day') in times:
+            if ('day') in item1.added_on:
                 item1.delete()
 
-            if ('week') in times:
+            elif ('week') in item1.added_on:
                 item1.delete()
 
-            if ('month') in times:
+            elif ('month') in item1.added_on:
                 item1.delete()
     return {'hi':'hi'}
 

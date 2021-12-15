@@ -45,10 +45,10 @@ class posts(models.Model):
     def __str__(self):
         return "Title: {}  Views: {}  image: {}".format(self.title,self.views,self.image.name)
         
-    # @property
-    # def added_on(self):
+    @property
+    def added_on(self):
 
-    #     times = timesince(self.update)
+        times = timesince(self.update)
     #     if self.temporary:
             
     #         if 'minute' in times:
@@ -59,7 +59,7 @@ class posts(models.Model):
 
     #         if 'month' in times:
     #             self.delete()
-    #     return times
+        return times
 
 
     def view(self):

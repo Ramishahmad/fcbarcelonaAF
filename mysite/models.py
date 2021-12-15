@@ -16,6 +16,7 @@ class Login(models.Model):
     def __str__(self):
         return "Name: {} ".format(self.uname)
 
+
 # Table for slider 
 class slider(models.Model):
     
@@ -25,12 +26,13 @@ class slider(models.Model):
     def __str__(self):
         return "Name: {} ".format(self.name)
 
+
 # Table for posts 
 class posts(models.Model):
 
     
     class Meta:
-        ordering = ['priority']
+        ordering = ['priority','date']
 
     title = models.CharField(max_length=100)
     image = models.ImageField(null=True,blank=True)
@@ -65,6 +67,7 @@ class posts(models.Model):
     def view(self):
         self.views += 1
 
+
 # Table for Comments
 class comments(models.Model):
     name = models.CharField(max_length=100,null=True,blank=True)
@@ -80,6 +83,7 @@ class comments(models.Model):
         return 'name: {} , comment id: {} ,  Post: {} '.format(self.name,self.id,self.post.title)
 
 
+# Table for comment replays
 class comments_replays(models.Model):
     name = models.CharField(max_length=100,null=False)
     content = models.TextField(max_length=500,null=False)
@@ -100,6 +104,7 @@ class FilterComments(models.Model):
         return 'name: {}'.format(self.name)
 
 
+# Table for Logs of updated post 
 class logs(models.Model):
 
     class Meta:

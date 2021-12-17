@@ -95,27 +95,39 @@
                     {% endif %}
                     {% endfor %}
 
+
+                    <p>
+
+                        <button class="btn btn-primary" style="direction: ltr !important;" type="button" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}" aria-expanded="false" aria-controls="reply{{items.id}}">
+                          Reply to this comment
+                        </button>
+                      </p>
+                      <div class="collapse" id="reply{{items.id}}">
+                        <!-- <div class="card card-body"> -->
+                            <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
+                                <form action="{% url 'replay_comment' %}" method="POST">
+                                    {%csrf_token%}
+                                    <br>
+                                    <input type="text" name="comment_id" value="{{ items.id }}" style="display: none;">
+                                    <input type="text" name="post_id" value="{{ post.id }}" style="display: none;">
+                                    <label for="replay_name"> Your Name: </label>
+                                    <input value="{{request.user.username}}"  style="direction: ltr;  color: rgb(255, 255, 255);" required type="text" name="replay_name" id="replay_name">
+                                    <br>
+                                    <label style="direction: ltr;" for="replay_content"> Your Comment: </label>
+                                    <textarea name="replay_content" required maxlength="30" style="color: white;" id="replay_content" cols="2" rows="2"></textarea>
+                                    <button type="submit" class="btn btn-primary mt-2"> Submit </button>
+                                    <br>
+                                    <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
+                                        
+                                        
+                                        <p> The word "{{ filtered_word }}" is not allowed </p>
+                                    </div>
+                                </form>
+                            </div>                        </div>
+                      </div>
+
                     <!-- end of code for comment replays  -->
-    <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
-        <form action="{% url 'replay_comment' %}" method="POST">
-            {%csrf_token%}
-            <br>
-            <input type="text" name="comment_id" value="{{ items.id }}" style="display: none;">
-            <input type="text" name="post_id" value="{{ post.id }}" style="display: none;">
-            <label for="replay_name"> Your Name: </label>
-            <input value="{{request.user.username}}"  style="direction: ltr; background-color: white !important;  color: black;" required type="text" name="replay_name" id="replay_name">
-            <br>
-            <label style="direction: ltr;" for="replay_content"> Your Comment: </label>
-            <textarea name="replay_content" required maxlength="30" style="color: white;" id="replay_content" cols="2" rows="2"></textarea>
-            <button type="submit" class="btn btn-primary mt-2"> Submit </button>
-            <br>
-            <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
-                
-                
-                <p> The word "{{ filtered_word }}" is not allowed </p>
-            </div>
-        </form>
-    </div>
+  
                 </td>
             </tr>
         </table>
@@ -129,7 +141,7 @@
             {%csrf_token%}
             <br>
             <label for="comment_name"> Your Name: </label>
-            <input value="{{request.user.username}}"  style="direction: ltr; background-color: white !important;  color: black;" required type="text" name="name" id="comment_name">
+            <input value="{{request.user.username}}"  style="direction: ltr; color: rgb(255, 255, 255);" required type="text" name="name" id="comment_name">
             <br>
             <label style="direction: ltr;" for="comment_content"> Your Comment: </label>
             <textarea name="content" required maxlength="30" style="color: white;" id="comment_content" cols="2" rows="3"></textarea>

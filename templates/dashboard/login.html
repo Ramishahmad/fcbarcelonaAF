@@ -35,10 +35,10 @@
                     <img src="/logo-green-2x.png" alt="">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    <label for="exampleInputEmail1" class="form-label">Email</label>
+                    <input type="text" value="{{Email}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                         name="uname">
-                    <div id="emailHelp" class="form-text">Enter Your Username and Password to login.</div>
+                    <div id="emailHelp" class="form-text">Enter Your Email and Password to login.</div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -48,7 +48,7 @@
                     <button type="submit" class="btn btn-primary mb-3">Login</button>
                 </div>
                 <div class="alert alert-danger pb-0 collapse {{ invalid }}">
-                    <p>{{Error}}</p>
+                    <p style="display: flex; justify-content: center; align-items: center;">{{Error}}</p>
                 </div>
                 {% else %}
                 <div class="alert alert-danger pb-0">

@@ -124,24 +124,37 @@ def singlepost(request,pid):
 
 # function for login page
 def login1(request):
-    
+    users = User.objects.all()
     invalid = ""
+    error = ""
+    Email = ""
     if request.method == 'POST':
         uname = request.POST.get('uname')
         pwd = request.POST.get('pwd')
         user = authenticate(request,username=uname,password=pwd)
+
+
         if user is None:
+            for items in users:
+                if uname in items.email:
+                    error = "Invalid Password"
+                    Email = uname
+
+                else:
+                    error = "This email does not have account"
+                    Email = ""
             invalid = "show"
             context = {
-            'Error': 'Invalid Username or Password',
+            'Email':Email,
+            'Error': error,
             'invalid':invalid
+            
             }
             return render(request,'dashboard/login.html',context)
     
         login(request,user)
                 
         return redirect(reverse_lazy('dashboard'))
-
     return render(request,'dashboard/login.html')
 
 
@@ -290,7 +303,7 @@ def updatePost(request,pid):
             s.temporary = True
         s.save()
         
-        create_log = logs.objects.create(user=request.user.username,post=s)
+        create_log = logs.objects.create(user=request.user.name,post=s)
         create_log.save()
         return HttpResponseRedirect(reverse_lazy('dashboard'))
     

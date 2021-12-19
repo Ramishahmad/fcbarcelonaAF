@@ -36,7 +36,7 @@
     <div class="blockTitle">
         <center>نظرات کاربران</center>
     </div>
-    <div class="blockContent" style="padding-bottom:0;">
+    <div class="blockContent replycomment" style="padding-bottom:0;">
 
 
         <!-- start comment post -->
@@ -60,7 +60,7 @@
 
                 <td class="difRowDarker" style="padding:0px;">
                     <div id="commentPoster"
-                        style="background:url('http://127.0.0.1:8000/media/rose-orange_C8vlTzi.jpg') center top no-repeat; background-size:cover;">
+                        style="background:url('http://127.0.0.1:8000/media/Shop_48px_tGKsCmx.png') center top no-repeat; background-size:cover;">
                         <hr>
                         <div id="commentPosterRankImg">
                         </div>
@@ -98,11 +98,12 @@
 
                     <p>
 
-                        <button class="btn btn-primary" style="direction: ltr !important;" type="button" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}" aria-expanded="false" aria-controls="reply{{items.id}}">
-                          Reply to this comment
+                        {% if user.is_authenticated %}  
+                        <button class="btn btn-primary" style="direction: ltr !important;" type="button" data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}" aria-expanded="false" aria-controls="reply{{items.id}} " >
+                            Reply to this comment
                         </button>
                       </p>
-                      <div class="collapse" id="reply{{items.id}}">
+                      <div class="collapse" data-bs-parent=".replycomment" id="reply{{items.id}}">
                         <!-- <div class="card card-body"> -->
                             <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
                                 <form action="{% url 'replay_comment' %}" method="POST">
@@ -114,7 +115,7 @@
                                     <input value="{{request.user.username}}"  style="direction: ltr;  color: rgb(255, 255, 255);" required type="text" name="replay_name" id="replay_name">
                                     <br>
                                     <label style="direction: ltr;" for="replay_content"> Your Comment: </label>
-                                    <textarea name="replay_content" required maxlength="30" style="color: white;" id="replay_content" cols="2" rows="2"></textarea>
+                                    <textarea name="replay_content" required maxlength="30" style="background-color: black !important; color: white;" id="replay_content" cols="2" rows="2"></textarea>
                                     <button type="submit" class="btn btn-primary mt-2"> Submit </button>
                                     <br>
                                     <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
@@ -124,6 +125,12 @@
                                     </div>
                                 </form>
                             </div>                        </div>
+                            {% endif %}
+                            {% if not user.is_authenticated %} 
+                            <button class="btn btn-primary" style="direction: ltr !important;" type="button" data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}" aria-expanded="false" aria-controls="reply{{items.id}} " >
+                              <a style="color: white; text-decoration: none;" href="/login">Login</a> to Reply to this comment
+                            </button>
+                            {% endif %}
                       </div>
 
                     <!-- end of code for comment replays  -->
@@ -137,6 +144,7 @@
     <div class="blockTitle">
     </div>
     <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
+        {% if user.is_authenticated  %}
         <form action="" method="POST">
             {%csrf_token%}
             <br>
@@ -152,6 +160,9 @@
                 <p> The word "{{ filtered_word }}" is not allowed </p>
             </div>
         </form>
+        {% else %}
+        <p style="font-size: 1rem; display: flex; align-items: center; justify-content: center; color: chocolate;"> Please ' <a href="/login"> login </a> ' to leave comment</p>
+        {% endif %}
     </div>
 </div>
 

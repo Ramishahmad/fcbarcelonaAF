@@ -2,8 +2,10 @@ from django.contrib import auth
 from django.db.models import fields, Q
 from django.db.models.expressions import F
 from django.forms.utils import to_current_timezone
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import  User, comments_replays, logs, posts, slider,comments,FilterComments,Login
+from accounts.models import Accounts
 from .forms import LoginForm, PostForm, SliderForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -12,6 +14,7 @@ from django.utils.timesince import timesince
 from website import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,authenticate, logout
+from website.settings import BASE_DIR
  
 
 # Global Variables
@@ -72,7 +75,7 @@ def singlepost(request,pid):
     filtered_word = " "
     filtered = False
     if request.method == 'POST':
-        name1 = request.POST.get('name')
+        name1 = request.user.name
         content = request.POST.get('content')
         # name1 = request.user.username
 
@@ -89,12 +92,11 @@ def singlepost(request,pid):
                 filtered_word = items.name
                 break
         
-        if (name1 != ""):
-            if (content != ""):
-                if filtered == False:
-                    commentnew = comments.objects.create(name=name1,content=content,post=post)
-                    commentnew.save()
-                    return HttpResponseRedirect('/post/{}'.format(post.id))
+        if (content != ""):
+            if filtered == False:
+                commentnew = comments.objects.create(name=name1,content=content,post=post,user=request.user)
+                commentnew.save()
+                return HttpResponseRedirect('/post/{}'.format(post.id))
 
                 
         
@@ -128,6 +130,10 @@ def login1(request):
     invalid = ""
     error = ""
     Email = ""
+    link = request.get_full_path()
+    link = link.lstrip("/login/?next=")
+    print('____________________________________')
+    print(link)
     if request.method == 'POST':
         uname = request.POST.get('uname')
         pwd = request.POST.get('pwd')
@@ -136,9 +142,10 @@ def login1(request):
 
         if user is None:
             for items in users:
-                if uname in items.email:
+                if uname == items.email:
                     error = "Invalid Password"
                     Email = uname
+                    break
 
                 else:
                     error = "This email does not have account"
@@ -153,7 +160,11 @@ def login1(request):
             return render(request,'dashboard/login.html',context)
     
         login(request,user)
-                
+        if link:
+            return redirect("/"+link)
+
+
+
         return redirect(reverse_lazy('dashboard'))
     return render(request,'dashboard/login.html')
 
@@ -269,7 +280,7 @@ def updatePost(request,pid):
     s = posts.objects.get(id=pid)
     create_log = ''
     draft_check = ''
-    priority_check = ''
+    priority_check = ''    
     if s.draft == True:
         draft_check = 'checked'
 
@@ -497,7 +508,7 @@ def replayComment(request):
     if request.method == 'POST':
 
         post_id = request.POST.get('post_id')
-        replay_name = request.POST.get('replay_name')
+        replay_name = request.user.name
         replay_content = request.POST.get('replay_content')
         comment_id = request.POST.get('comment_id')
 
@@ -506,4 +517,24 @@ def replayComment(request):
                     replay_commentnew = comments_replays.objects.create(name=replay_name,content=replay_content,comment_id=comment_id)
                     replay_commentnew.save()
                     return HttpResponseRedirect('/post/{}'.format(post_id))
-                
+
+
+def add_user(request):
+    user1 = User.objects.all()
+    if request.method == 'POST':
+        # title = request.POST.get('title')
+        image = request.FILES['image']
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        gender = request.POST.get('gender')
+        password = request.POST.get('pwd')
+
+        # print(request.POST)
+        users = Accounts.objects.create(name=name,image=image,email=email,gender=gender)        
+        users.set_password(password)
+        users.save()
+        return HttpResponse('Added successfully')
+    context = {
+        'users':user1
+    }
+    return render(request,'dashboard/add_account.html',context)

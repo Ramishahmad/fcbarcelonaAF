@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.utils.timesince import timesince
 from django.contrib.auth import decorators
 
+from accounts.models import Accounts
+
 User = get_user_model()
 
 
@@ -78,6 +80,7 @@ class comments(models.Model):
     show_comments = models.CharField(max_length=10,default='hidden')
     show_comment_label = models.CharField(max_length=20,default='Pending Review')
     show_comment_color = models.CharField(max_length=20,default='red')
+    user = models.ForeignKey(User,on_delete=CASCADE)
 
     def __str__(self):
         return 'name: {} , comment id: {} ,  Post: {} '.format(self.name,self.id,self.post.title)

@@ -61,7 +61,6 @@ class Accounts(AbstractBaseUser):
     # has_module_perms = models.BooleanField(default=False)
 
     objects = AccountsModelManager()
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name','gender']
 

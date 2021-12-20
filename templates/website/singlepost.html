@@ -60,7 +60,7 @@
 
                 <td class="difRowDarker" style="padding:0px;">
                     <div id="commentPoster"
-                        style="background:url('http://127.0.0.1:8000/media/Shop_48px_tGKsCmx.png') center top no-repeat; background-size:cover;">
+                        style="background:url('{{items.user.image.url}}') center top no-repeat; background-size:cover;">
                         <hr>
                         <div id="commentPosterRankImg">
                         </div>
@@ -111,9 +111,6 @@
                                     <br>
                                     <input type="text" name="comment_id" value="{{ items.id }}" style="display: none;">
                                     <input type="text" name="post_id" value="{{ post.id }}" style="display: none;">
-                                    <label for="replay_name"> Your Name: </label>
-                                    <input value="{{request.user.username}}"  style="direction: ltr;  color: rgb(255, 255, 255);" required type="text" name="replay_name" id="replay_name">
-                                    <br>
                                     <label style="direction: ltr;" for="replay_content"> Your Comment: </label>
                                     <textarea name="replay_content" required maxlength="30" style="background-color: black !important; color: white;" id="replay_content" cols="2" rows="2"></textarea>
                                     <button type="submit" class="btn btn-primary mt-2"> Submit </button>
@@ -128,7 +125,7 @@
                             {% endif %}
                             {% if not user.is_authenticated %} 
                             <button class="btn btn-primary" style="direction: ltr !important;" type="button" data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}" aria-expanded="false" aria-controls="reply{{items.id}} " >
-                              <a style="color: white; text-decoration: none;" href="/login">Login</a> to Reply to this comment
+                              <a style="color: white; text-decoration: none;" href="/login/?next=/{{post.id}}">Login</a> to Reply to this comment
                             </button>
                             {% endif %}
                       </div>
@@ -148,9 +145,7 @@
         <form action="" method="POST">
             {%csrf_token%}
             <br>
-            <label for="comment_name"> Your Name: </label>
-            <input value="{{request.user.username}}"  style="direction: ltr; color: rgb(255, 255, 255);" required type="text" name="name" id="comment_name">
-            <br>
+
             <label style="direction: ltr;" for="comment_content"> Your Comment: </label>
             <textarea name="content" required maxlength="30" style="color: white;" id="comment_content" cols="2" rows="3"></textarea>
             <button type="submit" class="btn btn-primary mt-2"> Submit </button>
@@ -161,7 +156,7 @@
             </div>
         </form>
         {% else %}
-        <p style="font-size: 1rem; display: flex; align-items: center; justify-content: center; color: chocolate;"> Please ' <a href="/login"> login </a> ' to leave comment</p>
+        <p style="font-size: 1rem; display: flex; align-items: center; justify-content: center; color: chocolate;"> Please ' <a href="/login/?next=/post/{{post.id}}"> login </a> ' to leave comment</p>
         {% endif %}
     </div>
 </div>

@@ -3,7 +3,9 @@
 
 {% block content %}
 
-<div id="wide_bar_bg2" style="width: 68%;">
+{% include 'partials/slider.html' %}
+
+<div id="wide_bar_bg2" style="width: 68%; margin-top: 10px;">
     <div class="newsBox" id="news19726" style="margin-bottom:15px;">
 
         <div class="newsHeader" style="direction:ltr !important;">
@@ -16,7 +18,8 @@
 
                 <center>
                     <div class="EspPic">
-                        <img src="{{ post.image.url }}" alt="{{ post.title }}" title="{{ post.title }}" /></a><span></span>
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}"
+                            title="{{ post.title }}" /></a><span></span>
                     </div>
                 </center>
                 <p style="direction: ltr;">
@@ -25,7 +28,7 @@
 
             </div>
         </div>
-        
+
         <div class="newsFooter newsInfo">
 
             <span style="float:right">{{post.date}}
@@ -52,7 +55,7 @@
                 <th class="middle" style="width: 35px; text-align: center; padding: 0px;"><a href="#"
                         title="نظر شماره {{ comments.id}}"><img
                             src="https://www.fcbarcelona.ir/index/images/icons/no_posticon.gif" alt="" />
-                        </a>
+                    </a>
                 </th>
             </tr>
             <tr>
@@ -85,7 +88,7 @@
                             <a href="#" style="color: chocolate;">
 
                                 {{replay.name}}
-                            </strong>
+                        </strong>
                         </a>
                         <strong>
                             {{replay.content}}
@@ -98,67 +101,79 @@
 
                     <p>
 
-                        {% if user.is_authenticated %}  
-                        <button class="btn btn-primary" style="direction: ltr !important;" type="button" data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}" aria-expanded="false" aria-controls="reply{{items.id}} " >
+                        {% if user.is_authenticated %}
+                        <button class="btn btn-primary" style="direction: ltr !important;" type="button"
+                            data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}"
+                            aria-expanded="false" aria-controls="reply{{items.id}} ">
                             Reply to this comment
                         </button>
-                      </p>
-                      <div class="collapse" data-bs-parent=".replycomment" id="reply{{items.id}}">
+                    </p>
+                    <div class="collapse" data-bs-parent=".replycomment" id="reply{{items.id}}">
                         <!-- <div class="card card-body"> -->
-                            <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
-                                <form action="{% url 'replay_comment' %}" method="POST">
-                                    {%csrf_token%}
-                                    <br>
-                                    <input type="text" name="comment_id" value="{{ items.id }}" style="display: none;">
-                                    <input type="text" name="post_id" value="{{ post.id }}" style="display: none;">
-                                    <label style="direction: ltr;" for="replay_content"> Your Comment: </label>
-                                    <textarea name="replay_content" required maxlength="30" style="background-color: black !important; color: white;" id="replay_content" cols="2" rows="2"></textarea>
-                                    <button type="submit" class="btn btn-primary mt-2"> Submit </button>
-                                    <br>
-                                    <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
-                                        
-                                        
-                                        <p> The word "{{ filtered_word }}" is not allowed </p>
-                                    </div>
-                                </form>
-                            </div>                        </div>
-                            {% endif %}
-                            {% if not user.is_authenticated %} 
-                            <button class="btn btn-primary" style="direction: ltr !important;" type="button" data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}" aria-expanded="false" aria-controls="reply{{items.id}} " >
-                              <a style="color: white; text-decoration: none;" href="/login/?next=/{{post.id}}">Login</a> to Reply to this comment
-                            </button>
-                            {% endif %}
-                      </div>
+                        <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
+                            <form action="{% url 'replay_comment' %}" method="POST">
+                                {%csrf_token%}
+                                <br>
+                                <input type="text" name="comment_id" value="{{ items.id }}" style="display: none;">
+                                <input type="text" name="post_id" value="{{ post.id }}" style="display: none;">
+                                <label style="direction: ltr;" for="replay_content"> Your Comment: </label>
+                                <textarea name="replay_content" required maxlength="30"
+                                    style="background-color: black !important; color: white;" id="replay_content"
+                                    cols="2" rows="2"></textarea>
+                                <button type="submit" class="btn btn-primary mt-2"> Submit </button>
+                                <br>
+                                <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
 
-                    <!-- end of code for comment replays  -->
-  
-                </td>
-            </tr>
-        </table>
-        {% endfor %}
 
+                                    <p> The word "{{ filtered_word }}" is not allowed </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if not user.is_authenticated %}
+                    <button class="btn btn-primary" style="direction: ltr !important;" type="button"
+                        data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}"
+                        aria-expanded="false" aria-controls="reply{{items.id}} ">
+                        <a style="color: white; text-decoration: none;" href="/login/?next=/{{post.id}}">Login</a> to
+                        Reply to this comment
+                    </button>
+                    {% endif %}
     </div>
-    <div class="blockTitle">
-    </div>
-    <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
-        {% if user.is_authenticated  %}
-        <form action="" method="POST">
-            {%csrf_token%}
-            <br>
 
-            <label style="direction: ltr;" for="comment_content"> Your Comment: </label>
-            <textarea name="content" required maxlength="30" style="color: white;" id="comment_content" cols="2" rows="3"></textarea>
-            <button type="submit" class="btn btn-primary mt-2"> Submit </button>
-            <br>
-            <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
-                
-                <p> The word "{{ filtered_word }}" is not allowed </p>
-            </div>
-        </form>
-        {% else %}
-        <p style="font-size: 1rem; display: flex; align-items: center; justify-content: center; color: chocolate;"> Please ' <a href="/login/?next=/post/{{post.id}}"> login </a> ' to leave comment</p>
-        {% endif %}
-    </div>
+    <!-- end of code for comment replays  -->
+
+    </td>
+    </tr>
+    </table>
+    {% endfor %}
+
+</div>
+
+
+<div class="blockTitle">
+</div>
+<div class="blockContent" style="padding-bottom:10px; direction: ltr;">
+    {% if user.is_authenticated %}
+    <form action="" method="POST">
+        {%csrf_token%}
+        <br>
+
+        <label style="direction: ltr;" for="comment_content"> Your Comment: </label>
+        <textarea name="content" required maxlength="30" style="color: white;" id="comment_content" cols="2"
+            rows="3"></textarea>
+        <button type="submit" class="btn btn-primary mt-2"> Submit </button>
+        <br>
+        <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
+
+            <p> The word "{{ filtered_word }}" is not allowed </p>
+        </div>
+    </form>
+    {% else %}
+    <p style="font-size: 1rem; display: flex; align-items: center; justify-content: center; color: chocolate;"> Please '
+        <a href="/login/?next=/post/{{post.id}}"> login </a> ' to leave comment</p>
+    {% endif %}
+</div>
 </div>
 
 {% endblock content %}

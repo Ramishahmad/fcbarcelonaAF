@@ -1,0 +1,108 @@
+   
+   <!-- sidebar -->
+    <div id="sidebar-nav">
+
+        <ul id="dashboard-menu">
+            {% if dashboard %}
+            <li class="active">
+                <div class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a href="/">
+                    <i class="fa fa-laptop"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            {% else %} 
+            <li>
+                <a href="/dashboard">
+                    <i class="fa fa-laptop"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            {%endif%}
+
+            {% if addpost %}
+            <li class="active">
+                <div class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                
+                <a href="/addpost">
+                    <i class="fa fa-pencil-square-o"></i>
+                    <span>Add Post</span>
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/addpost">
+                    <i class="fa fa-pencil-square-o"></i>
+                    <span>Add Post</span> <span class="badge pull-right label-success"></span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if dashboard_slider %}
+            <li class="active">
+                <div class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a href="">
+                    <i class="fa fa-table"></i>
+                    <span> Slider </span>
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/dashboard-slider">
+                    <i class="fa fa-table"></i>
+                    <span>Slider</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% if comments %}
+            <li class="active">
+                <div class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a href="">
+                    <i class="fa fa-signal"></i>
+                    <span>Comments </span>
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/comments">
+                    <i class="fa fa-signal"></i>
+                    <span>Comments</span>
+                </a>
+            </li>
+            {% endif %}
+            
+            {% if manage %}
+            <li class="active">
+                <div class="pointer">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <a href="">
+                    <i class="fa fa-signal"></i>
+                    <span> Manage </span>
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/manage">
+                    <i class="fa fa-signal"></i>
+                    <span> Manage </span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <!-- end sidebar -->

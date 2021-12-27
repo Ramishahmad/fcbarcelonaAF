@@ -2,54 +2,14 @@
 
 
 {% block content %}
+
     <!-- sidebar -->
-    <div id="sidebar-nav">
-
-        <ul id="dashboard-menu">
-            <li class="active">
-                <div class="pointer">
-                    <div class="arrow"></div>
-                    <div class="arrow_border"></div>
-                </div>
-                <a href="/">
-                    <i class="fa fa-laptop"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="/addpost">
-                    <i class="fa fa-pencil-square-o"></i>
-                    <span>Add Post</span> <span class="badge pull-right label-success"></span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/dashboard-slider">
-                    <i class="fa fa-table"></i>
-                    <span>Slider</span>
-                </a>
-            </li>
+   
+    {% include 'partials/dashboard-navbar.html' with dashboard=True %}
 
 
-
-            <li>
-                <a href="/comments">
-                    <i class="fa fa-signal"></i>
-                    <span>Comments</span>
-                </a>
-            </li>
-
-            
-            <li>
-                <a href="/manage">
-                    <i class="fa fa-signal"></i>
-                    <span> Manage </span>
-                </a>
-            </li>
-
-        </ul>
-    </div>
     <!-- end sidebar -->
+
 
 
     <!-- main container -->
@@ -110,11 +70,10 @@
                 <div class="panel panel-default post-wrap pro-box">
                     <div class="panel-heading"><strong>Last Post</strong></div>
 
-                    <div class="post-info"
-                        style="overflow:hidden; text-overflow:ellipsis;  display: -webkit-box; -webkit-line-clamp: 5; line-clamp: 5; -webkit-box-orient: vertical;">
+                    <div class="post-info">
                         <span class="arrow-pro right"></span>
                         <div class="panel-body">
-                            <div class="desk based">
+                            <div class="desk based" style="overflow:hidden; text-overflow:ellipsis;  display: -webkit-box; -webkit-line-clamp: 5; line-clamp: 5; -webkit-box-orient: vertical;">
                                 <h3>{{item.title}}</h3>
                                 <p>{{ item.content}}</p>
                             </div>
@@ -222,7 +181,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <p></p>
+                    <p> Are you sure to delete this record</p>
                 </div>
 
                 <div class="modal-footer">
@@ -236,37 +195,6 @@
     
         <!-- scripts -->
         <script src="https://erwinagpasa.com/myxdashboard/js/jquery.min.js"></script>
-     <!-- scripts -->
-     <script src="https://erwinagpasa.com/myxdashboard/js/jquery.min.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/theme.js"></script>
- 
- 
-     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery-jvectormap-1.2.2.min.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery-jvectormap-world-mill-en.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery.sparkline.min.js"></script>
- 
-     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/waypoints.min.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/dashboard/jquery.counterup.min.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap-modal.js"></script>
- 
-     <script src="https://erwinagpasa.com/myxdashboard/js/flot/jquery.flot.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/flot/jquery.flot.resize.js"></script>
- 
-     <!-- Upload file drag and drop -->
-     <script src="https://erwinagpasa.com/myxdashboard/js/filedrag/filedrag.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/bootstrap.file-input.js"></script>
- 
-     <!-- notification -->
-     <script src="https://erwinagpasa.com/myxdashboard/js/notify/jquery-ui.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/notify/jquery.notify.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/jquery.slimscroll.js"></script>
-     <!-- <script src="https://erwinagpasa.com/myxdashboardjs/bootstrap_calendar.js"></script> -->
- 
- 
-     <script src="https://erwinagpasa.com/myxdashboard/js/pizza/snap.svg.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/pizza/pizza.js"></script>
-     <script src="https://erwinagpasa.com/myxdashboard/js/index.js"></script>
 
 
     <script>

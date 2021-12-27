@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import (
-    AbstractBaseUser,BaseUserManager
+    AbstractBaseUser,BaseUserManager,PermissionsMixin
 )
 from django.utils.timesince import timesince
 
@@ -23,9 +23,6 @@ class AccountsModelManager(BaseUserManager):
         
 
         user.set_password(password)
-        user.is_active = True
-        user.is_staff = True
-        user.is_admin = False
         user.save(using = self._db)
         return user
 
@@ -42,23 +39,23 @@ class AccountsModelManager(BaseUserManager):
             password = password
         )
         
-        user.is_admin = True
-        user.is_active = True
         user.is_staff = True
-        # has_module_perms = True
+        user.is_superuser = True
         user.save(using = self._db)
         return user
 
 
 
-class Accounts(AbstractBaseUser):
+class Accounts(AbstractBaseUser,PermissionsMixin):
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     date_of_birth = models.DateField(null=True,blank=True)
     gender = models.CharField(max_length=10, null=True,blank=True)
     image = models.ImageField(upload_to='profile',null=True,blank=True)
     is_staff = models.BooleanField(default=False)
-    # has_module_perms = models.BooleanField(default=False)
+    # is_superuser = models.BooleanField(default=False)
+
+
 
     objects = AccountsModelManager()
     USERNAME_FIELD = 'email'
@@ -70,10 +67,6 @@ class Accounts(AbstractBaseUser):
             return timesince(self.date_of_birth)
         else:
             return "Not Defined"
-
-    def has_module_perms(self,self1):
-        has_module_perms = True
-
 
     def __str__(self):
         return self.email

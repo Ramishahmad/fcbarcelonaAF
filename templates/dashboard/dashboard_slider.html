@@ -3,60 +3,17 @@
 
 {% block content %}
     <!-- sidebar -->
-    <div id="sidebar-nav">
-
-        <ul id="dashboard-menu">
-            <li>
-                <a href="/dashboard">
-                    <i class="fa fa-laptop"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-
-            <li>
-
-                <a href="/addpost">
-                    <i class="fa fa-pencil-square-o"></i>
-                    <span>Add Post</span>
-                </a>
-            </li>
-
-            <li class="active">
-                <div class="pointer">
-                    <div class="arrow"></div>
-                    <div class="arrow_border"></div>
-                </div>
-                <a href="">
-                    <i class="fa fa-table"></i>
-                    <span> Slider </span>
-                </a>
-            </li>
+   
+    {% include 'partials/dashboard-navbar.html' with dashboard_slider=True %}
 
 
-
-            <li>
-                <a href="/comments">
-                    <i class="fa fa-signal"></i>
-                    <span>Comments </span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/manage">
-                    <i class="fa fa-signal"></i>
-                    <span> Manage </span>
-                </a>
-            </li>
-
-        </ul>
-    </div>
     <!-- end sidebar -->
 
 
     <!-- main container -->
     <div class="content">
         <div id="pad-wrapper">
-
+            <h4>Slider</h4>
 
             <!-- ORDER TABLE -->
             <div class="col-md-6">
@@ -165,6 +122,57 @@
         </div><!-- /pad-wrapper -->
     </div><!-- content -->
     <!-- /main container -->
+    <!--post modal-->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4><strong>Delete Confirmation</strong></h4>
+                </div>
 
+                <div class="modal-body">
+                    <p> Are You sure to delete this record? </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-default btn-sm" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button data-dismiss="modal" class="btn btn-danger btn-sm" id="btnYes"> Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+        <!-- scripts -->
+     <!-- scripts -->
+     <script src="https://erwinagpasa.com/myxdashboard/js/jquery.min.js"></script>
+
+    <script>
+        $('#myModal').on('show', function () {
+            var tit = $('.confirm-delete').data('title');
+
+            //$('#myModal .modal-body p').html("Are you sure you want to delete this record " + '<b>' + tit +'</b>' + ' ?');
+            $('#myModal .modal-body p').html("Are you sure you want to delete this record?");
+            var id = $(this).data('id'),
+                removeBtn = $(this).find('.danger');
+        })
+
+        $('.confirm-delete').on('click', function (e) {
+            e.preventDefault();
+
+            var id = $(this).data('id');
+            $('#myModal').data('id', id).modal('show');
+        });
+
+        $('#btnYes').click(function () {
+            // handle deletion here
+            var id = $('#myModal').data('id');
+            // $('[data-id=' + id  + ']').parents('tr').remove();
+            window.location = "{% url 'delete_slider' 12 %}".replace(/12/, id);
+            $('#myModal').modal('hide');
+
+        });
+    </script>
 
 {% endblock content %}

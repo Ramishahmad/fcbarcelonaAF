@@ -13,14 +13,13 @@ import os
 from django.utils.timesince import timesince
 from website import settings
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login,authenticate, logout
+from django.contrib.auth import get_user_model, login,authenticate, logout
 from website.settings import BASE_DIR
  
 
 # Global Variables
 colapse = ""
 num_visits = 0
-slides = 0
 addnew = " "
 
 
@@ -48,10 +47,6 @@ def index(request):
     global num_visits
     num_visits = request.session.get('num_visits',0)
     request.session['num_visits'] = num_visits + 1
-    global slides
-    slides = 0
-    for i in slide:
-        slides = slides + 1
     context = {
         'slide':slide,
         'post':post,
@@ -126,14 +121,12 @@ def singlepost(request,pid):
 
 # function for login page
 def login1(request):
-    users = User.objects.all()
     invalid = ""
     error = ""
     Email = ""
     link = request.get_full_path()
     link = link.lstrip("/login/?next=")
-    print('____________________________________')
-    print(link)
+
     if request.method == 'POST':
         uname = request.POST.get('uname')
         pwd = request.POST.get('pwd')
@@ -141,15 +134,16 @@ def login1(request):
 
 
         if user is None:
-            for items in users:
-                if uname == items.email:
+            try:
+            
+                users = get_user_model().objects.get(email=uname)
+                if users:
                     error = "Invalid Password"
                     Email = uname
-                    break
+            except:
+                error = "This email does not have account"
+                Email = ""
 
-                else:
-                    error = "This email does not have account"
-                    Email = ""
             invalid = "show"
             context = {
             'Email':Email,
@@ -226,7 +220,7 @@ def dashboard(request):
         'item':item,
         'num_visits':num_visits,
         'post_count':post_count,
-        'slides':slides, 
+        # 'slides':slides, 
         'post_views':post_views,
         'slides_count':slides_count
            }
@@ -532,6 +526,8 @@ def add_user(request):
         # print(request.POST)
         users = Accounts.objects.create(name=name,image=image,email=email,gender=gender)        
         users.set_password(password)
+        users.is_superuser = True
+        users.is_staff = True
         users.save()
         return HttpResponse('Added successfully')
     context = {

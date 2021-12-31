@@ -53,7 +53,6 @@ class Accounts(AbstractBaseUser,PermissionsMixin):
     gender = models.CharField(max_length=10, null=True,blank=True)
     image = models.ImageField(upload_to='profile',null=True,blank=True)
     is_staff = models.BooleanField(default=False)
-    # is_superuser = models.BooleanField(default=False)
 
 
 

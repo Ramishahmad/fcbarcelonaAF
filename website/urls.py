@@ -28,7 +28,9 @@ urlpatterns = [
     path('logout/',logout1, name='logout'),
     
     # Url related to Mysite App
-    path('',include('mysite.urls'))
+    path('',include('mysite.urls')),
+    path('message/',include('chat.urls')),
+    path('messages/',include('message.urls'))
 ]
 
 # Url related to media files

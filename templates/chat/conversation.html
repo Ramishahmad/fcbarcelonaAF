@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="background-color: rgb(123, 189, 233);">
+    {% if not user.is_authenticated %}
+    <p> You are not Authorized !!</p>
+
+    {% else %}
+    <ul>
+        <div style="width: 200px; display: flex; align-items: center; justify-content: center;">
+        <br>
+        <div style="background-color: white; padding: 20px; direction: ltr;">
+            {% for items in conversation %}
+
+            <li>
+                <div style="border-radius: 5px; padding: 5px; background-color: rgb(139, 132, 132);">
+
+                    <a href="{{items.id}}" style="text-decoration: none;">{{ items.sender.name }}</a>
+                </div>
+            </li>
+            {% endfor %}
+
+
+    </div>
+    </div>
+
+    </ul>
+{% endif %}
+</body>
+</html>

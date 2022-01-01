@@ -10,7 +10,7 @@ class Conversation(models.Model):
 
     person1 = models.ForeignKey(User,on_delete=CASCADE,related_name='person1')
     person2 = models.ForeignKey(User,on_delete=CASCADE,related_name='person2')
-    timestamp = models.DateTimeField(auto_now_add=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
     sender = models.IntegerField(blank=True,null=True)
 

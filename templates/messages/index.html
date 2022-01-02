@@ -20,14 +20,14 @@
             {% if  user.id == items.person1.id %}
             <span style="display: flex;">
             <img src="{{ items.person2.image.url }}" style="margin-top: 5px; width: 30px; height: 30px; border-radius: 40%;" alt="">
-            <p style="text-decoration: none;"><a style="{% if not user.id == items.sender and not items.is_read %} font-weight:bold; {% endif %} text-decoration: none;" href="{{items.id}}">{{items.person2.name}}</p>
+            <p style="text-decoration: none;"><a style="{% if not user.id == items.sender and not items.is_read %} font-weight:bold; {% endif %} text-decoration: none;" href="{{items.id}}">{{items.person2.name}} {% if not user.id == items.sender and not items.is_read %} ({{items.unread}}) {% endif %}</p>
             </span>
             {% endif %}
 
             {% if  user.id == items.person2.id %}
             <span style="display: flex;">
                 <img src="{{ items.person1.image.url }}" style="margin-top: 5px; width: 30px; height: 30px; border-radius: 40%;" alt="">
-                <p style="text-decoration: none;" ><a style="{% if not user.id == items.sender and not items.is_read %} font-weight:bold; {% endif %}text-decoration: none;" href="{{items.id}}">{{items.person1.name}}</p>
+                <p style="text-decoration: none;" ><a style="{% if not user.id == items.sender and not items.is_read %} font-weight:bold; {% endif %}text-decoration: none;" href="{{items.id}}">{{items.person1.name}} {% if not user.id == items.sender and not items.is_read %}({{ items.unread }}) {% endif %}</p>
                 </span>
             {% endif %}
 

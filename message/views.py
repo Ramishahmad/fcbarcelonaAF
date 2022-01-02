@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.db.models import Q
 from message.models import Conversation, Messages, User
 from django.utils import timezone
-
+from django.urls import reverse_lazy
 # Create your views here.
 
 def conversationList(request):
@@ -16,8 +16,26 @@ def conversationList(request):
 
 def messageList(request,cid):
     messages = Messages.objects.filter(conversation_id=cid)
-    conversation = Conversation.objects.get(id=cid)
     user = request.user.id
+
+# This code is used for decoding the messages 
+    decoding = ''
+    
+    for item in messages:
+        decoding = item.content
+        for i in (('&%42','a'),('$!22','e'),('@)(12','i'),('*%62','o'),('%#72','u')):
+            decoding = decoding.replace(*i)
+        item.decoded = decoding
+
+
+
+# we get try and catch because if the conversation be deleted we dont get error
+    try:
+        conversation = Conversation.objects.get(id=cid)
+    except:
+        return redirect(reverse_lazy('conversation_list'))
+
+
 
     receiver = 0
     receiver1 = 0
@@ -33,27 +51,41 @@ def messageList(request,cid):
     if messages.last():
         receiver1 = messages.last().sender.id
 
+
 # code to check last message sender id
     if not user == receiver1:
         conversation.is_read = True
+        conversation.unread = 0
+        conversation.seen_time = timezone.now()
         conversation.save()
-
-    users = User.objects.get(id=receiver)
+    try:
+        users = User.objects.get(id=receiver)
+    except:
+        return redirect(reverse_lazy('conversation_list'))
 
     if request.method =='POST':
         user = request.user.id
         content = request.POST.get('msg')
 
-        message = Messages.objects.create(sender_id=user,receiver_id=receiver,content=content,conversation_id=cid)
+# this code is used for encoding messages
+        encodings = content
+        for i in (('a','&%42'),('e','$!22'),('i','@)(12'),('o','*%62'),('u','%#72')):
+            encodings = encodings.replace(*i)
+        encoding = encodings
+
+        message = Messages.objects.create(sender_id=user,receiver_id=receiver,content=encoding,conversation_id=cid)
         message.save()
         conversation.timestamp = timezone.now()
         conversation.is_read = False
+        conversation.is_seen = False
         conversation.sender = user
+        conversation.unread += 1
         conversation.save()
-
+        return redirect('/messages/{}'.format(cid))
     context = {
         'messages':messages,
-        'users':users
+        'users':users,
+        'conversation':conversation
     }
 
     return render(request,'messages/chat.html',context)

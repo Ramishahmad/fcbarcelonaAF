@@ -36,11 +36,19 @@
 
             <span>
 
-                {{ items.content }}
+                {{ items.decoded }}
             </span>
             
  
     </div>
+
+    {% if items.sender.id == user.id and messages.last.id == items.id %}
+         {% if user.id == items.sender.id and conversation.is_read %}
+         <p style="direction: rtl; font-size: 0.8em; color: rgb(255, 255, 255);">Seen ({{ conversation.seen_time }})</p>
+        {% else %}
+        <p style="direction: rtl; font-size: 0.8em; color: rgb(255, 255, 255);">Delivered</p>
+        {% endif %}
+        {% endif %}
         {% endfor %}
     
     <form action="" method="post">

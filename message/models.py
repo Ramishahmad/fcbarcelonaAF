@@ -13,6 +13,8 @@ class Conversation(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
     sender = models.IntegerField(blank=True,null=True)
+    unread = models.IntegerField(default=0)
+    seen_time = models.DateTimeField(null=True,blank=True)
 
     def __str__(self):
         return 'ID: {} - between: {} and {}  -- Time: ( {} )'.format(self.id,self.person1.name,self.person2.name,self.timestamp)
@@ -21,14 +23,16 @@ class Conversation(models.Model):
         ordering = ['-timestamp']
 
 
+
 class Messages(models.Model):
 
     sender = models.ForeignKey(User,on_delete=CASCADE,related_name='sender')
     receiver = models.ForeignKey(User,on_delete=CASCADE,related_name='receiver')
-    content = models.CharField(max_length=200)
+    content = models.CharField(max_length=1000)
     timestamp = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
     conversation = models.ForeignKey(Conversation,on_delete=CASCADE)
+    decoded = models.CharField(max_length=500)
 
     def __str__(self):
         return 'Conversation ID: {} - From: {} - To: {} - Time: ({}) -'.format(self.conversation.id,self.sender.name,self.receiver.name,self.timestamp)

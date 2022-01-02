@@ -4,6 +4,8 @@ from django.db.models.expressions import F
 from django.forms.utils import to_current_timezone
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+
+from message.models import Conversation
 from .models import  User, comments_replays, logs, posts, slider,comments,FilterComments,Login
 from accounts.models import Accounts
 from .forms import LoginForm, PostForm, SliderForm
@@ -44,13 +46,24 @@ def temporary(request):
 def index(request):
     slide = slider.objects.all()
     post = posts.objects.all()
+    user = request.user.id
+    conversation_list = Conversation.objects.filter(Q(person1_id=user)|Q(person2_id=user))
     global num_visits
+
+    unread_messages = 0
+    for items in conversation_list:
+        if not user == items.sender and not items.is_read:
+            unread_messages += 1
+
     num_visits = request.session.get('num_visits',0)
     request.session['num_visits'] = num_visits + 1
+
+
     context = {
         'slide':slide,
         'post':post,
-        'num_visits':num_visits
+        'num_visits':num_visits,
+        'unread_messages':unread_messages,
         
     
     }

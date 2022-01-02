@@ -122,6 +122,7 @@
                     انتقادات</a>
                 <a href="/login/?next=/"> ورود به سایت </a>
                 <a>بازدید : {{ num_visits }}</a>
+                {% if unread_messages %}<a> You have ({{ unread_messages }}) Unread Message(s)</a>{% endif %}
 
             </div>
         </div>

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% include 'partials/slider.html' %}
+
+<div id="wide_bar_bg2">
+    <div id="wide_bar2">
+
+        <div class="container d-flex" >
+            <div class="col-9 m-1" id="post">
+                
+                <!-- post related json data  -->
+
+            </div>
+            <div class="col-3 m-1">
+                <div class="blockTitle">Latest Posts</div>
+
+                <div class="blockContent" style="direction: ltr;">
+                    <ul id="latestpost">
+
+                    </ul>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div id="data">
+
+</div>
+
+<script>
+    fetch("http://127.0.0.1:8000/api")
+        .then((res) => res.json())
+        .then((res) => {
+            let result = " ";
+            // let post = "";
+
+            res.forEach((element) => {
+                result += `<li><a href="/post/${element.id}">${element.title}</a></li>`;
+
+            });
+            document.getElementById("latestpost").innerHTML = result;
+
+
+            res.forEach((element1) => {
+                result = ""
+                if (element1.draft != true) {                
+                result += `<div class="blockTitle"><a style="color: white;" href="/post/${element1.id}">
+                             ${element1.title}</a></div>
+                        <div class="blockContent">
+                        <div class="postContent" style="direction: ltr !important;">
+                             <p>${element1.content}</p>
+                        </div>
+                        <hr>
+                        <div class="p-1">
+                            <a href="/post/${element1.id}" class="btn bg-primary white" style="padding: 3px; "> Read More </a>
+                        </div>
+                        </div>`;
+                    }
+
+            });
+            document.getElementById("post").innerHTML = result;
+
+
+        })
+        .catch((err) => console.log(err));
+
+</script>
+{% endblock content %}

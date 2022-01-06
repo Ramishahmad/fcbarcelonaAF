@@ -38,8 +38,7 @@ urlpatterns = [
     path('manage/',manage, name='manage'),
 
     path('replaycomment/',replayComment, name='replay_comment'),
-    path('adduser/',add_user, name='add_user')
-
+    path('adduser/',add_user, name='add_user'),
 
 
 ]

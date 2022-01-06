@@ -31,7 +31,8 @@ urlpatterns = [
     path('',include('mysite.urls')),
     # path('message/',include('chat.urls')),
     path('messages/',include('message.urls')),
-    path('accounts/',include('accounts.urls'))
+    path('accounts/',include('accounts.urls')),
+    path('api/',include('api.urls')),
 ]
 
 # Url related to media files

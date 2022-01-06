@@ -4,6 +4,7 @@ from django.db.models.expressions import F
 from django.forms.utils import to_current_timezone
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from rest_framework import response
 from message.models import Conversation
 from .models import  User, comments_replays, logs, posts, slider,comments,FilterComments,Login
 from accounts.models import Accounts
@@ -16,6 +17,8 @@ from website import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model, login,authenticate, logout
 from website.settings import BASE_DIR
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
  
 
 # Global Variables
@@ -527,6 +530,7 @@ def replayComment(request):
 
 
 def add_user(request):
+    
     user1 = User.objects.all()
     if request.method == 'POST':
         # title = request.POST.get('title')

@@ -21,14 +21,24 @@ def messageList(request,cid):
 # This code is used for decoding the messages 
     decoding = ''
     
+# Code for decoding messages 1
+    # for item in messages:
+    #     decoding = item.content
+    #     decoding = decoding.replace('&%42','a')
+    #     decoding = decoding.replace('$!22','e')
+    #     decoding = decoding.replace('@)(12','i')
+    #     decoding = decoding.replace('*%62','o')
+    #     decoding = decoding.replace('%#72','u')
+    #     item.decoded = decoding
+
+# code for decoding messages 2
     for item in messages:
         decoding = item.content
         for i in (('&%42','a'),('$!22','e'),('@)(12','i'),('*%62','o'),('%#72','u')):
             decoding = decoding.replace(*i)
         item.decoded = decoding
 
-
-
+    
 # we get try and catch because if the conversation be deleted we dont get error
     try:
         conversation = Conversation.objects.get(id=cid)
@@ -38,7 +48,7 @@ def messageList(request,cid):
 
 
     receiver = 0
-    receiver1 = 0
+    last_message_sender = 0
     if user == conversation.person1.id:
         receiver = conversation.person2.id
     elif user == conversation.person2.id:
@@ -49,14 +59,15 @@ def messageList(request,cid):
     # for items in messages:
     #     receiver1 = items.sender.id
     if messages.last():
-        receiver1 = messages.last().sender.id
+        last_message_sender = messages.last().sender.id
 
 
 # code to check last message sender id
-    if not user == receiver1:
+    if not user == last_message_sender:
+        if conversation.is_read == False:
+            conversation.seen_time = timezone.now()
         conversation.is_read = True
         conversation.unread = 0
-        conversation.seen_time = timezone.now()
         conversation.save()
     try:
         users = User.objects.get(id=receiver)
@@ -73,11 +84,11 @@ def messageList(request,cid):
             encodings = encodings.replace(*i)
         encoding = encodings
 
+
         message = Messages.objects.create(sender_id=user,receiver_id=receiver,content=encoding,conversation_id=cid)
         message.save()
         conversation.timestamp = timezone.now()
         conversation.is_read = False
-        conversation.is_seen = False
         conversation.sender = user
         conversation.unread += 1
         conversation.save()

@@ -4,7 +4,6 @@ from django.db.models.expressions import F
 from django.forms.utils import to_current_timezone
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-
 from message.models import Conversation
 from .models import  User, comments_replays, logs, posts, slider,comments,FilterComments,Login
 from accounts.models import Accounts
@@ -511,9 +510,10 @@ def deleteUnusedImageAll(request):
 
 
 def replayComment(request):
+     
     replay_comment = comments_replays.objects.all()
+    
     if request.method == 'POST':
-
         post_id = request.POST.get('post_id')
         replay_name = request.user.name
         replay_content = request.POST.get('replay_content')

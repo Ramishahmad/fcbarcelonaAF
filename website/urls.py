@@ -29,8 +29,9 @@ urlpatterns = [
     
     # Url related to Mysite App
     path('',include('mysite.urls')),
-    path('message/',include('chat.urls')),
-    path('messages/',include('message.urls'))
+    # path('message/',include('chat.urls')),
+    path('messages/',include('message.urls')),
+    path('accounts/',include('accounts.urls'))
 ]
 
 # Url related to media files

@@ -4,6 +4,7 @@ from django.db.models.expressions import F
 from django.forms.utils import to_current_timezone
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+import requests
 from rest_framework import response
 from message.models import Conversation
 from .models import  User, comments_replays, logs, posts, slider,comments,FilterComments,Login
@@ -25,7 +26,9 @@ from rest_framework.response import Response
 colapse = ""
 num_visits = 0
 addnew = " "
-
+comment_id_filter = 0
+count_post_load = 0
+filtered_word_comment = ""
 
 # function for temporary posts and is added on context preprocessors
 def temporary(request):
@@ -76,50 +79,54 @@ def index(request):
 # Function for detail view of post
 def singlepost(request,pid):
     
-    slide = slider.objects.all()
-    post1 = posts.objects.all() 
-    post = posts.objects.get(id=pid)
-    filtercomment = FilterComments.objects.all()
+    slide = requests.get('http://127.0.0.1:8000/api/slider').json()
+    post1 = requests.get('http://127.0.0.1:8000/api/posts').json()
+    post = requests.get('http://127.0.0.1:8000/api/post/{}'.format(pid)).json()
+    filtercomment = requests.get('http://127.0.0.1:8000/api/filter-comment').json()
+
     # comment = comments_replays.objects.all()
     not_allowed = " "
     filtered_word = " "
     filtered = False
+    global comment_id_filter
+    global filtered_word_comment
+    global count_post_load
+    count_post_load +=1
     if request.method == 'POST':
         name1 = request.user.name
         content = request.POST.get('content')
         # name1 = request.user.username
 
         for items in filtercomment:
-            if content in items.name:
+            if items['name'] in content:
                 filtered = True
-
         for items in filtercomment:
-            x =  content.find(items.name)
+            x =  content.find(items['name'])
             
             if x != -1:
                 filtered= True
                 not_allowed = "show"
-                filtered_word = items.name
+                filtered_word = items['name']
                 break
         
-        if (content != ""):
             if filtered == False:
-                commentnew = comments.objects.create(name=name1,content=content,post=post,user=request.user)
+                commentnew = comments.objects.create(name=name1,content=content,post_id=pid,user=request.user)
                 commentnew.save()
-                return HttpResponseRedirect('/post/{}'.format(post.id))
+                return HttpResponseRedirect('/post/{}'.format(pid))
+                
 
                 
         
 
     
-    comment1 = comments.objects.filter(post__id=pid,show_comment=True)
-
-    comment_replay = comments_replays.objects.all()
+    comment1 = requests.get('http://127.0.0.1:8000/api/post-comment/{}'.format(pid)).json()
+    comment_replay = requests.get('http://127.0.0.1:8000/api/comment-replay/{}'.format(pid)).json()
 
     post2 = get_object_or_404(posts,id=pid)
     post2.view()
     post2.save()
     views = post2.views
+
     context = {
         'comment_replay':comment_replay,
         'filtered_word':filtered_word,
@@ -128,8 +135,12 @@ def singlepost(request,pid):
         'slide':slide,
         'post':post,
         'post1':post1, 
-        'views':views
+        'views':views,
+        'comment_id_filter':comment_id_filter,
+        'count_post_load':count_post_load,
 
+        # this variable is to show filtered word for comments and assign in replyComment function
+        'filtered_word_comment':filtered_word_comment
     }   
     return render(request,"website/singlepost.html",context)
 
@@ -164,15 +175,12 @@ def login1(request):
             'Email':Email,
             'Error': error,
             'invalid':invalid
-            
             }
             return render(request,'dashboard/login.html',context)
     
         login(request,user)
         if link:
             return redirect("/"+link)
-
-
 
         return redirect(reverse_lazy('dashboard'))
     return render(request,'dashboard/login.html')
@@ -208,24 +216,19 @@ def dashboard(request):
     #             item1.delete()
 
     post_count = 0
-    slides_count = 0
     post_views = 0
 
-    for items in slide:
-        slides_count += 1
+    slides_count = slide.count()
 
     for item in post:
         item = item
 
         if item.draft == True:
-            item.draft_or_published = 'Draft'
-            item.draft_color = 'red'
             post_count -= 1
-        else:
-            item.draft_or_published = 'Published'
-            item.draft_color = 'green'
 
         post_count = post_count + 1  
+
+        # code for total views of posts
         post_views = post_views+item.views          
     
     context = {
@@ -245,7 +248,6 @@ def dashboard(request):
 # Function to add new post
 @login_required
 def addPost(request):
-    form = PostForm(request.POST or None)
     if request.method == 'POST':
         title = request.POST.get('title')
         image = request.FILES['image']
@@ -254,14 +256,12 @@ def addPost(request):
         priority = request.POST.get('priority')
         temporary = request.POST.get('temporary')
 
-        # print(request.POST)
         post = posts.objects.create(title=title,image=image,content=content)        
 
         if draft == None:
             post.draft = False
         else:
             post.draft = True
-
 
         if priority == None:
             post.priority = False
@@ -278,7 +278,6 @@ def addPost(request):
         return HttpResponseRedirect(reverse_lazy('dashboard'))
     
     context = {
-        'form1':form
     }
     return render(request,"dashboard/addpost1.html",context)
 
@@ -290,11 +289,13 @@ def updatePost(request,pid):
     create_log = ''
     draft_check = ''
     priority_check = ''    
+
     if s.draft == True:
         draft_check = 'checked'
 
     if s.priority == True:
         priority_check = 'checked'
+
     if request.method == 'POST':
         draft = request.POST.get('draft')
         priority = request.POST.get('priority')
@@ -490,11 +491,13 @@ def manage(request):
     return render(request,'dashboard/manage.html',context)
 
 
+
 @login_required
 def deleteUnusedImages(request,image):
     os.remove("media/" + image)
 
     return HttpResponseRedirect(reverse_lazy('manage'))
+
 
 
 @login_required
@@ -515,18 +518,36 @@ def deleteUnusedImageAll(request):
 def replayComment(request):
      
     replay_comment = comments_replays.objects.all()
-    
+    filtercomment = requests.get('http://127.0.0.1:8000/api/filter-comment').json()
+
     if request.method == 'POST':
         post_id = request.POST.get('post_id')
         replay_name = request.user.name
         replay_content = request.POST.get('replay_content')
         comment_id = request.POST.get('comment_id')
+        filtered1 = False
+        global comment_id_filter
+        global count_post_load
+        global filtered_word_comment
+        for items in filtercomment:
+            x =  replay_content.find(items['name'])
+            
+            if x != -1:
+                filtered1 = True
+                filtered_word_comment = items['name']
+                count_post_load = 0
+                comment_id_filter = int(comment_id)
+                break
+            else:
+                comment_id_filter = 0
 
-        if (replay_name != ""):
-            if (replay_content != ""):
-                    replay_commentnew = comments_replays.objects.create(name=replay_name,content=replay_content,comment_id=comment_id)
-                    replay_commentnew.save()
-                    return HttpResponseRedirect('/post/{}'.format(post_id))
+        if filtered1 == False:
+            replay_commentnew = comments_replays.objects.create(name=replay_name,content=replay_content,comment_id=comment_id,post_id=post_id)
+            replay_commentnew.save()
+
+        return HttpResponseRedirect('/post/{}'.format(post_id))
+
+        
 
 
 def add_user(request):

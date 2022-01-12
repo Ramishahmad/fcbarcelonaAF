@@ -14,14 +14,21 @@ def conversationList(request):
     }
     return render(request,'messages/index.html',context)
 
+
 def messageList(request,cid):
     messages = Messages.objects.filter(conversation_id=cid)
     user = request.user.id
-
-# This code is used for decoding the messages 
+    
+    # we get try and catch because if the conversation be deleted we dont get error
+    try:
+        conversation = Conversation.objects.get(id=cid)
+    except:
+        return redirect(reverse_lazy('conversation_list'))
+    
+    # This code is used for decoding the messages 
     decoding = ''
     
-# Code for decoding messages 1
+    # Code for decoding messages 1
     # for item in messages:
     #     decoding = item.content
     #     decoding = decoding.replace('&%42','a')
@@ -31,20 +38,13 @@ def messageList(request,cid):
     #     decoding = decoding.replace('%#72','u')
     #     item.decoded = decoding
 
-# code for decoding messages 2
+
+    # code for decoding messages 2
     for item in messages:
         decoding = item.content
         for i in (('&%42','a'),('$!22','e'),('@)(12','i'),('*%62','o'),('%#72','u')):
             decoding = decoding.replace(*i)
         item.decoded = decoding
-
-    
-# we get try and catch because if the conversation be deleted we dont get error
-    try:
-        conversation = Conversation.objects.get(id=cid)
-    except:
-        return redirect(reverse_lazy('conversation_list'))
-
 
 
     receiver = 0
@@ -53,32 +53,32 @@ def messageList(request,cid):
         receiver = conversation.person2.id
     elif user == conversation.person2.id:
         receiver = conversation.person1.id
-    
 
-# -- code to find last message of this conversation --
-    # for items in messages:
-    #     receiver1 = items.sender.id
+
+    try:
+        users = User.objects.get(id=receiver)
+    except:
+        return redirect(reverse_lazy('conversation_list'))
+
+    # -- code to find sender of last message of this conversation --
     if messages.last():
         last_message_sender = messages.last().sender.id
 
 
-# code to check last message sender id
+    # code to check last message sender id and set the seen time to now and conv unread to false
     if not user == last_message_sender:
         if conversation.is_read == False:
             conversation.seen_time = timezone.now()
         conversation.is_read = True
         conversation.unread = 0
         conversation.save()
-    try:
-        users = User.objects.get(id=receiver)
-    except:
-        return redirect(reverse_lazy('conversation_list'))
+
 
     if request.method =='POST':
         user = request.user.id
         content = request.POST.get('msg')
 
-# this code is used for encoding messages
+        # this code is used for encoding messages
         encodings = content
         for i in (('a','&%42'),('e','$!22'),('i','@)(12'),('o','*%62'),('u','%#72')):
             encodings = encodings.replace(*i)
@@ -93,6 +93,7 @@ def messageList(request,cid):
         conversation.unread += 1
         conversation.save()
         return redirect('/messages/{}'.format(cid))
+
     context = {
         'messages':messages,
         'users':users,
@@ -110,6 +111,9 @@ def users(request):
     return render(request,'messages/user.html',context)
 
 
+# when you click on user and click send message this function check
+# if the user have already conversation with you it redirect you to that conversation 
+# otherwise if you dont have conversation with the user it will create new conversation
 def conv(request,uid):
     user = request.user.id
     receiver = uid

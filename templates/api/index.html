@@ -34,7 +34,7 @@
 </div>
 
 <script>
-    fetch("http://127.0.0.1:8000/api")
+    fetch("http://127.0.0.1:8000/api/posts")
         .then((res) => res.json())
         .then((res) => {
             let result = " ";
@@ -46,9 +46,9 @@
             });
             document.getElementById("latestpost").innerHTML = result;
 
+            result = ""
 
             res.forEach((element1) => {
-                result = ""
                 if (element1.draft != true) {                
                 result += `<div class="blockTitle"><a style="color: white;" href="/post/${element1.id}">
                              ${element1.title}</a></div>
@@ -71,4 +71,23 @@
         .catch((err) => console.log(err));
 
 </script>
+<script>
+    fetch("http://127.0.0.1:8000/api/slider")
+        .then((res) => res.json())
+        .then((res) => {
+            let result = " ";
+            // let post = "";
+
+            res.forEach((element) => {
+                result += `<div id="slideshow_content" data-p="187.50" style="">
+                           <img data-u="image" src="${element.img_url}" />
+                           <img data-u="thumb" src="${element.img_url}" /></div>`;
+
+            });
+            document.getElementById("slides").innerHTML = result;
+
+        })
+        .catch((err) => console.log(err));
+        </script>
+        
 {% endblock content %}

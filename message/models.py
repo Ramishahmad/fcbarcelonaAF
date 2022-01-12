@@ -15,6 +15,9 @@ class Conversation(models.Model):
     sender = models.IntegerField(blank=True,null=True)
     unread = models.IntegerField(default=0)
     seen_time = models.DateTimeField(null=True,blank=True)
+    
+    # Added this only because serializer it does not do anything it is just foor excluding in serializer 
+    serializer = models.BooleanField(default=True)
 
     def __str__(self):
         return 'ID: {} - between: {} and {}  -- Time: ( {} )'.format(self.id,self.person1.name,self.person2.name,self.timestamp)
@@ -33,6 +36,9 @@ class Messages(models.Model):
     is_read = models.BooleanField(default=False)
     conversation = models.ForeignKey(Conversation,on_delete=CASCADE)
     decoded = models.CharField(max_length=500)
+    
+    # Added this only because serializer it does not do anything it is just foor excluding in serializer 
+    serializer = models.BooleanField(default=True)
 
     def __str__(self):
         return 'Conversation ID: {} - From: {} - To: {} - Time: ({}) -'.format(self.conversation.id,self.sender.name,self.receiver.name,self.timestamp)

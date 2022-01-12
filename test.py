@@ -1,6 +1,14 @@
 
-a = '?next/dashboard'
+# a = '?next/dashboard'
 
-b = a.lstrip('?next/')
+# b = a.lstrip('?next/')
 
-print(b)
+# print(b)
+
+
+a = 181
+
+b = 180
+
+c = a/b
+print(c)

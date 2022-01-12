@@ -109,8 +109,10 @@
 
         <div><a style="display: inline;" href="#top" id="BackToTop"><span></span></a></div>
 
-        <!-- Unread PM notification box, bottom right corner of the pages -->
-
+<!-- Unread PM notification box, bottom right corner of the pages -->
+{% if unread_messages %}
+<div class="msg_bar"><a href="/messages" style="display:block; padding:15px 0 25px 0;"><span>{{ unread_messages }}</span><br /> پیام جدید</a></div>
+{% endif %}
 
         <!-- Header bar -->
 
@@ -122,8 +124,6 @@
                     انتقادات</a>
                 <a href="/login/?next=/"> ورود به سایت </a>
                 <a>بازدید : {{ num_visits }}</a>
-                {% if unread_messages %}<a> You have ({{ unread_messages }}) Unread Message(s)</a>{% endif %}
-
             </div>
         </div>
 
@@ -135,7 +135,8 @@
                     <a style="margin-right:10px;" href="https://instagram.com/fcbarcelona_dot_ir"
                         title="صفحه رسمی سایت در اینستاگرام<br />اخبار و حواشی پیرامون آبی و اناری‌ها را مشاهده کنید."
                         class="tooltip" target="_blank"><img src="https://www.fcbarcelona.ir/images/icons/Insta.png"
-                            height="70" /></a><a style="margin-right:10px;"
+                            height="70" /></a>
+                            <a style="margin-right:10px;"
                         href="https://telegram.me/fcbarcelona_dot_ir"
                         title="کانال رسمی سایت در تلگرام<br />برای دریافت آخرین اخبار در کوتاه‌ترین زمان ممکن، عضو شوید."
                         class="tooltip" target="_blank"><img src="https://www.fcbarcelona.ir/images/icons/Telegram.png"
@@ -143,9 +144,9 @@
                         title="کانال رسمی سایت در آپارات<br />آخرین ویدئوهای آبی و اناری را تماشا کنید." class="tooltip"
                         target="_blank"><img src="https://www.fcbarcelona.ir/images/icons/Aparat.png" height="70" /></a>
                 </div>
-                <!-- <div id="header_left"><a href="/"><img
+                <div id="header_left"><a href="/"><img
                             src="https://www.fcbarcelona.ir/index/themes/Barca 2016/images/Slogan.png" /></a></div>
-            </div> -->
+            </div>
             </div>
 
             <div id="bar_container_bg" onClick="">

@@ -82,6 +82,9 @@ class comments(models.Model):
     show_comment_color = models.CharField(max_length=20,default='red')
     user = models.ForeignKey(User,on_delete=CASCADE)
 
+    # Added this only because serializer it does not do anything it is just foor excluding in serializer 
+    serializer = models.BooleanField(default=True)
+
     def __str__(self):
         return 'name: {} , comment id: {} ,  Post: {} '.format(self.name,self.id,self.post.title)
 
@@ -93,6 +96,10 @@ class comments_replays(models.Model):
     comment = models.ForeignKey(comments,on_delete=CASCADE)
     show_comment = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(posts,on_delete=CASCADE)
+
+    # Added this only because serializer it does not do anything it is just foor excluding in serializer 
+    serializer = models.BooleanField(default=True)
 
     def __str__(self):
         return 'name: {} , comment id: {} , ----------- Comment: {} , id: {}'.format(self.name,self.id,self.comment.name,self.comment.id)
@@ -102,6 +109,9 @@ class comments_replays(models.Model):
 class FilterComments(models.Model):
     
     name = models.CharField(max_length=20,default=" ",null=True,blank=True)
+    
+    # Added this only because serializer it does not do anything it is just foor excluding in serializer 
+    serializer = models.BooleanField(default=True)
 
     def __str__(self):
         return 'name: {}'.format(self.name)
@@ -116,6 +126,9 @@ class logs(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     user = models.CharField(max_length=50)
     post = models.ForeignKey(posts,on_delete=CASCADE)
+    
+    # Added this only because serializer it does not do anything it is just foor excluding in serializer 
+    serializer = models.BooleanField(default=True)
 
     def __str__(self):
         return 'Last Update: {}, Post: {}'.format(self.date,self.post)

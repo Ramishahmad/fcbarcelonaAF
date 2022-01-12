@@ -18,7 +18,7 @@
 
                 <center>
                     <div class="EspPic">
-                        <img src="{{ post.image.url }}" alt="{{ post.title }}"
+                        <img src="{{ post.image }}" alt="{{ post.title }}"
                             title="{{ post.title }}" /></a><span></span>
                     </div>
                 </center>
@@ -62,8 +62,9 @@
 
 
                 <td class="difRowDarker" style="padding:0px;">
+                    
                     <div id="commentPoster"
-                        style="background:url('{{items.user.image.url}}') center top no-repeat; background-size:cover;">
+                        style="background:url('{{ items.user.image }}') center top no-repeat; background-size:cover;">
                         <hr>
                         <div id="commentPosterRankImg">
                         </div>
@@ -82,7 +83,7 @@
                     <!-- code for comment replays -->
                     <hr>
                     {% for replay in comment_replay %}
-                    {% if replay.comment.id == items.id %}
+                    {% if replay.comment == items.id %}
                     <p>
                         <strong>
                             <a href="#" style="color: chocolate;">
@@ -97,15 +98,21 @@
                     <hr>
                     {% endif %}
                     {% endfor %}
-
-
+                    
+                    {% if count_post_load == 1 %}
+                    {% if comment_id_filter == items.id %}
+                                <div class="alert alert-danger pb-0 mt-3 d-flex justify-content-center">
+                                    <p> The word "{{ filtered_word_comment }}" is not allowed </p>
+                                </div>
+                                {% endif %}
+                    {% endif %}
                     <p>
 
                         {% if user.is_authenticated %}
                         <button class="btn btn-primary" style="direction: ltr !important;" type="button"
                             data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}"
                             aria-expanded="false" aria-controls="reply{{items.id}} ">
-                            Reply to this comment
+                            Reply to this comment 
                         </button>
                     </p>
                     <div class="collapse" data-bs-parent=".replycomment" id="reply{{items.id}}">
@@ -122,11 +129,7 @@
                                     cols="2" rows="2"></textarea>
                                 <button type="submit" class="btn btn-primary mt-2"> Submit </button>
                                 <br>
-                                <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
-
-
-                                    <p> The word "{{ filtered_word }}" is not allowed </p>
-                                </div>
+                                
                             </form>
                         </div>
                     </div>

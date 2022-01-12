@@ -54,6 +54,8 @@ class Accounts(AbstractBaseUser,PermissionsMixin):
     image = models.ImageField(upload_to='profile',null=True,blank=True)
     is_staff = models.BooleanField(default=False)
 
+    # Added this only because serializer it does not do anything it is just foor excluding in serializer 
+    serializer = models.BooleanField(default=True)
 
 
     objects = AccountsModelManager()

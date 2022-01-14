@@ -10,6 +10,7 @@ class PostForm(forms.ModelForm):
             # 'id',
             'title',
             'image',
+            'thumbnail',
             'content'
             
         ]

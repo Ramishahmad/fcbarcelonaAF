@@ -38,6 +38,7 @@ class posts(models.Model):
 
     title = models.CharField(max_length=100)
     image = models.ImageField(null=True,blank=True)
+    thumbnail = models.ImageField(null=True,blank=True)
     content = models.TextField(max_length=50000)
     views = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
@@ -91,7 +92,7 @@ class comments(models.Model):
 
 # Table for comment replays
 class comments_replays(models.Model):
-    name = models.CharField(max_length=100,null=False)
+    user = models.ForeignKey(User,on_delete=CASCADE)
     content = models.TextField(max_length=500,null=False)
     comment = models.ForeignKey(comments,on_delete=CASCADE)
     show_comment = models.BooleanField(default=False)
@@ -102,7 +103,7 @@ class comments_replays(models.Model):
     serializer = models.BooleanField(default=True)
 
     def __str__(self):
-        return 'name: {} , comment id: {} , ----------- Comment: {} , id: {}'.format(self.name,self.id,self.comment.name,self.comment.id)
+        return 'name: {} , comment id: {} , ----------- Comment: {} , id: {}'.format(self.user.name,self.id,self.comment.name,self.comment.id)
 
 
 # Table for comment filtering

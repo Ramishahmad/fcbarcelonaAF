@@ -13,23 +13,35 @@
                     <div class="col-9 m-1">
                         {% for item in post reversed%}
                          {% if not item.draft %}
+                         
                         <div class="blockTitle"><a style="color: white;" href="{% url 'post_url' item.id %}">
                                 {{ item.title }}</a></div>
                         <div class="blockContent">
-                            <div class="postContent" style="direction: ltr !important;">
+                            <div class="d-flex">
+                            <div class="postContent col-3" style="direction: rtl !important; margin-left: 5px;">
+                                {% if item.thumbnail %} 
+                                <img src="{{item.thumbnail.url}}" alt="">
+                                {% else %} 
+                                <img src="/static/images/news_bg_default.jpg" alt="">
+                                {% endif %} 
+                            </div>
+                            <div class="d-flex postContent col-9" style="direction: rtl !important; padding-left: 5px; padding-right: 3px; ">
+                                <img src="/static/images/AdvBG.gif" alt="" style=" margin-left: 7px;" >
+                                
                                 <p>{{ item.content }}</p>
                             </div>
+                        </div>
                             <hr>
-                            <div class="p-1">
-                                <a href="{% url 'post_url' item.id%}" class="btn bg-primary white"
-                                    style="padding: 3px; "> Read More </a>
+                            <div class="p-1" style="direction: ltr;" >
+                                <a style="font-family:Arial, Helvetica, sans-serif; font-weight: bold; color: white;" href="{% url 'post_url' item.id%}" class="btn bg-primary white"
+                                    style="padding: 3px; "> ادامه مطلب  </a>
                             </div>
                         </div>
                         {% endif %}
                         {% endfor %}
                     </div>
                     <div class="col-3 m-1">
-                        <div class="blockTitle">Latest Posts</div>
+                        <div class="blockTitle"> مطالب اخیر </div>
 
                         <div class="blockContent" style="direction: ltr;">
                             <ul>

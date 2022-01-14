@@ -83,6 +83,8 @@ def singlepost(request,pid):
     post1 = requests.get('http://127.0.0.1:8000/api/posts').json()
     post = requests.get('http://127.0.0.1:8000/api/post/{}'.format(pid)).json()
     filtercomment = requests.get('http://127.0.0.1:8000/api/filter-comment').json()
+    comment1 = requests.get('http://127.0.0.1:8000/api/post-comment/{}'.format(pid)).json()
+    comment_replay = requests.get('http://127.0.0.1:8000/api/comment-replay/{}'.format(pid)).json()
 
     # comment = comments_replays.objects.all()
     not_allowed = " "
@@ -113,14 +115,7 @@ def singlepost(request,pid):
                 commentnew = comments.objects.create(name=name1,content=content,post_id=pid,user=request.user)
                 commentnew.save()
                 return HttpResponseRedirect('/post/{}'.format(pid))
-                
-
-                
-        
-
     
-    comment1 = requests.get('http://127.0.0.1:8000/api/post-comment/{}'.format(pid)).json()
-    comment_replay = requests.get('http://127.0.0.1:8000/api/comment-replay/{}'.format(pid)).json()
 
     post2 = get_object_or_404(posts,id=pid)
     post2.view()
@@ -251,12 +246,13 @@ def addPost(request):
     if request.method == 'POST':
         title = request.POST.get('title')
         image = request.FILES['image']
+        thumbnail = request.FILES['thumbnail']
         content = request.POST.get('content')
         draft = request.POST.get('draft')
         priority = request.POST.get('priority')
         temporary = request.POST.get('temporary')
 
-        post = posts.objects.create(title=title,image=image,content=content)        
+        post = posts.objects.create(title=title,image=image,thumbnail=thumbnail,content=content)        
 
         if draft == None:
             post.draft = False
@@ -522,7 +518,7 @@ def replayComment(request):
 
     if request.method == 'POST':
         post_id = request.POST.get('post_id')
-        replay_name = request.user.name
+        replay_user = request.user
         replay_content = request.POST.get('replay_content')
         comment_id = request.POST.get('comment_id')
         filtered1 = False
@@ -542,7 +538,7 @@ def replayComment(request):
                 comment_id_filter = 0
 
         if filtered1 == False:
-            replay_commentnew = comments_replays.objects.create(name=replay_name,content=replay_content,comment_id=comment_id,post_id=post_id)
+            replay_commentnew = comments_replays.objects.create(user=replay_user,content=replay_content,comment_id=comment_id,post_id=post_id)
             replay_commentnew.save()
 
         return HttpResponseRedirect('/post/{}'.format(post_id))

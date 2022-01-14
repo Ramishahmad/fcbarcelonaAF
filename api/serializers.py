@@ -37,6 +37,8 @@ class SliderSerializer(serializers.ModelSerializer):
 
 class CommentReplaySerializer(serializers.ModelSerializer):
 
+    user = UserSerializer(read_only = True)
+
     class Meta:
         model = comments_replays
         exclude = ['serializer']

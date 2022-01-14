@@ -8,21 +8,21 @@
 <div id="wide_bar_bg2" style="width: 68%; margin-top: 10px;">
     <div class="newsBox" id="news19726" style="margin-bottom:15px;">
 
-        <div class="newsHeader" style="direction:ltr !important;">
-            <span class="news_title" style="direction:ltr !important; float: left !important;">
-                <p>{{ post.title }}</p>
+        <div class="newsHeader" style="display: flex; align-items: center; justify-content: center;">
+            <span class="news_title" style="display: flex; align-items: center; justify-content: center;">
+                <p style="color: rgb(53, 42, 42); font-family: Arial, Helvetica, sans-serif; font-weight: bold;" >{{ post.title }}</p>
             </span>
         </div>
         <div class="newsBody">
             <div class="newsBodyText newsBodyFull">
 
                 <center>
-                    <div class="EspPic">
+                    <div class="EspPic" >
                         <img src="{{ post.image }}" alt="{{ post.title }}"
                             title="{{ post.title }}" /></a><span></span>
                     </div>
                 </center>
-                <p style="direction: ltr;">
+                <p style="direction: rtl; font-family:Arial, Helvetica, sans-serif;" >
                     {{ post.content }}
                 </p>
 
@@ -84,14 +84,15 @@
                     <hr>
                     {% for replay in comment_replay %}
                     {% if replay.comment == items.id %}
-                    <p>
+                    <p style="direction: rtl;">
                         <strong>
-                            <a href="#" style="color: chocolate;">
+                            <a href="/profile/{{replay.user.id}}" style="color: chocolate;">
 
-                                {{replay.name}}
+                                {{replay.user.name}}
                         </strong>
                         </a>
                         <strong>
+                            <span> - </span>
                             {{replay.content}}
                         </strong>
                     </p>
@@ -112,22 +113,22 @@
                         <button class="btn btn-primary" style="direction: ltr !important;" type="button"
                             data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}"
                             aria-expanded="false" aria-controls="reply{{items.id}} ">
-                            Reply to this comment 
+                            جواب دادن به این کمنت 
                         </button>
                     </p>
                     <div class="collapse" data-bs-parent=".replycomment" id="reply{{items.id}}">
                         <!-- <div class="card card-body"> -->
                         <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
-                            <form action="{% url 'replay_comment' %}" method="POST">
+                            <form action="{% url 'replay_comment' %}" method="POST" style="direction: rtl;">
                                 {%csrf_token%}
                                 <br>
                                 <input type="text" name="comment_id" value="{{ items.id }}" style="display: none;">
                                 <input type="text" name="post_id" value="{{ post.id }}" style="display: none;">
-                                <label style="direction: ltr;" for="replay_content"> Your Comment: </label>
+                                <label style="direction: rtl;" for="replay_content"> دیدگاه شما : </label>
                                 <textarea name="replay_content" required maxlength="30"
                                     style="background-color: black !important; color: white;" id="replay_content"
                                     cols="2" rows="2"></textarea>
-                                <button type="submit" class="btn btn-primary mt-2"> Submit </button>
+                                <button type="submit" class="btn btn-primary mt-2"> ارسال دیدگاه  </button>
                                 <br>
                                 
                             </form>
@@ -135,12 +136,9 @@
                     </div>
                     {% endif %}
                     {% if not user.is_authenticated %}
-                    <button class="btn btn-primary" style="direction: ltr !important;" type="button"
-                        data-bs-parent="#wide_bar_bg2" data-bs-toggle="collapse" data-bs-target="#reply{{items.id}}"
-                        aria-expanded="false" aria-controls="reply{{items.id}} ">
-                        <a style="color: white; text-decoration: none;" href="/login/?next=/{{post.id}}">Login</a> to
-                        Reply to this comment
-                    </button>
+                        <p class="btn-primary btn" >
+                        <a style="color: white; text-decoration: none;" href="/login/?next=/post/{{post.id}}"> برای جواب دادن به این کمنت نخست ورود شوید </a> 
+                    </p>
                     {% endif %}
     </div>
 
@@ -158,23 +156,26 @@
 </div>
 <div class="blockContent" style="padding-bottom:10px; direction: ltr;">
     {% if user.is_authenticated %}
-    <form action="" method="POST">
+    <form action="" method="POST" style="direction: rtl;">
         {%csrf_token%}
         <br>
 
-        <label style="direction: ltr;" for="comment_content"> Your Comment: </label>
+        <label style="direction: rtl;" for="comment_content"> دیدگاه شما: </label>
         <textarea name="content" required maxlength="30" style="color: white;" id="comment_content" cols="2"
             rows="3"></textarea>
-        <button type="submit" class="btn btn-primary mt-2"> Submit </button>
+        <button type="submit" class="btn btn-primary mt-2"> ارسال دیدگاه </button>
         <br>
-        <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3">
+        <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3 d-flex justify-content-center">
 
             <p> The word "{{ filtered_word }}" is not allowed </p>
         </div>
     </form>
     {% else %}
-    <p style="font-size: 1rem; display: flex; align-items: center; justify-content: center; color: chocolate;"> Please '
-        <a href="/login/?next=/post/{{post.id}}"> login </a> ' to leave comment</p>
+    <p style="font-size: 1rem; display: flex; align-items: center; justify-content: center; color: chocolate;">
+         شوید' 
+        <a href="/login/?next=/post/{{post.id}}"> وارد سایت </a>
+        ' برای گذاشتن کمنت
+            </p>
     {% endif %}
 </div>
 </div>

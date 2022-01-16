@@ -24,4 +24,4 @@ def register(request):
     context = {
         'users':user1
     }
-    return render(request,'accounts/register.html',context)
+    return render(request,'accounts/register1.html',context)

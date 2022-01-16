@@ -115,7 +115,7 @@ def singlepost(request,pid):
                 commentnew = comments.objects.create(name=name1,content=content,post_id=pid,user=request.user)
                 commentnew.save()
                 return HttpResponseRedirect('/post/{}'.format(pid))
-    
+
 
     post2 = get_object_or_404(posts,id=pid)
     post2.view()

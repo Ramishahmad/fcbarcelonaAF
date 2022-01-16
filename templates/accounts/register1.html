@@ -1,0 +1,139 @@
+
+{% extends 'base.html' %} 
+
+
+{% block content %}
+
+<div id="wide_bar_bg2">
+    <div id="wide_bar2">
+                 
+    <form id="regform" name="regform" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+<div class="blockTitle shadowLittle"><center>مشخصات اصلی</center></div>
+<div class="blockContent DownRound shadowLittle">
+    
+        <table cellspacing="2" class="outer p7">
+                                                                            <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption-required'>
+				                <span class='caption-text'> اسم مکمل </span>
+				                <span class='caption-marker'>*</span>
+				            </div>
+                                                    </td>
+                        <td class="odd middle" style="text-align:justify; padding:7px;">
+                            <input required placeholder="نام مکمل " type='text' name='uname' title='نام‌ ‌کاربری' id='uname' size='35' maxlength='25' value='' />
+                        </td>
+                                            </tr>
+                                                                <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption-required'>
+				                <span class='caption-text'> ایمیل آدرس </span>
+				                <span class='caption-marker'>*</span>
+				            </div>
+                                                    </td>
+                        <td class=" even middle" style="text-align:justify; padding:7px;">
+                            <input required placeholder="ایمیل آدرس" type='text' name='email' title=' ایمیل آدرس' id='email' size='35' maxlength='255' value='' />
+                        </td>
+                                            </tr>
+                                                                <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption-required'>
+				                <span class='caption-text'>کلمه عبور</span>
+				                <span class='caption-marker'>*</span>
+				            </div>
+                                                    </td>
+                        <td class="odd middle" style="text-align:justify; padding:7px;">
+                            <input required placeholder="پسورد" type="password" name="pass" id="pass" size="35" maxlength="32" value=""  autocomplete="off"  />
+                        </td>
+                                            </tr>
+                                                                <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption-required'>
+				                <span class='caption-text'>تکرار کلمه عبور</span>
+				                <span class='caption-marker'>*</span>
+				            </div>
+                                                    </td>
+                        <td class=" even middle" style="text-align:justify; padding:7px;">
+                            <input required placeholder="تکرار پسورد" type="password" name="vpass" id="vpass" size="35" maxlength="32" value=""  autocomplete="off" />
+                        </td>
+                                            </tr>
+                                                                <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption-required'>
+				                <span class='caption-text'> عکس پروفایل</span>
+				                <span class='caption-marker'>*</span>
+				            </div>
+                                                    </td>
+                        <td class=" even middle" style="text-align:justify; padding:7px;">
+                            <input  type="file" name="image" id="image"/>
+                        </td>
+                                            </tr>
+
+                                                                <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption-required'>
+				                <span class='caption-text'>  تاریخ تولد</span>
+				                <span class='caption-marker'>*</span>
+				            </div>
+                                                    </td>
+                        <td class=" even middle" style="text-align:justify; padding:7px;">
+                            <input type="date" name="dob" id="dob"/>
+                        </td>
+                                            </tr>
+
+                                                                <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption-required'>
+				                <span class='caption-text'>  جنسیت </span>
+				                <span class='caption-marker'></span>
+				            </div>
+                                                    </td>
+                        <td class=" even middle" style="text-align:justify; padding:7px;">
+                                <label for="male"> مذکر</label>
+                                <input type="radio" name="gender" id="male" value="Male" title="Male" checked />
+                                <label for="male"> مونث</label>
+                                <input type="radio" name="gender" id="female" value="Female" title="Female" />
+                        </td>
+                                            </tr>
+                                                                <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption'>
+				                <span class='caption-text'>شرایط عضویت</span>
+				                <span class='caption-marker'>*</span>
+				            </div>
+                                                    </td>
+                        <td class="odd middle" style="text-align:justify; padding:7px;">
+                            <div class="pad5"> به اولین پایگاه هواداران بارسلونا در افغانستان خوش آمدید!<br /><br />  ثبت نام شما در سایت ما، به معنی پذیرش  کامل قوانین سایت است.<br /><br />با آرزوی داشتن اوقاتی خوش در سایت ما<br />مدیریت سایت</div>
+<br /><input required type='checkbox' name='agree_disc' id='agree_disc1' title='' value='1'  /><label name='xolb_agree_disc' for='agree_disc1'>شرایط سایت را قبول دارم.</label>&nbsp;
+
+                        </td>
+                                            </tr>
+                                                                                                                        <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption'>
+				                <span class='caption-text'></span>
+				                <span class='caption-marker'>*</span>
+				            </div>
+                                                    </td>
+                        <td class="odd middle" style="text-align:justify; padding:7px;">
+                            <input type='submit' class='formButton' name='submitButton'  id='submitButton' value='ارسال' title='ارسال'  />
+                        </td>
+                                            </tr>
+                                                                <tr>
+                    	                        <td class="head" width="30%" style="padding:7px;">
+				            <div class='xoops-form-element-caption'>
+				                <span class='caption-text'></span>
+				                <span class='caption-marker'>*</span>
+				            </div>
+                                                    </td>
+                        <td class=" even middle" style="text-align:justify; padding:7px;">
+                            <tr class='foot'><td colspan='2'>* = لازم</td></tr>
+                        </td>
+                                            </tr>
+                                    </table>
+        
+</div>
+        
+                                                                </form>    
+</div></div>
+{% endblock %}

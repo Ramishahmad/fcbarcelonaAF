@@ -87,8 +87,8 @@ def singlepost(request,pid):
     comment_replay = requests.get('http://127.0.0.1:8000/api/comment-replay/{}'.format(pid)).json()
 
     # comment = comments_replays.objects.all()
-    not_allowed = " "
-    filtered_word = " "
+    not_allowed = ""
+    filtered_word = ""
     filtered = False
     global comment_id_filter
     global filtered_word_comment
@@ -177,14 +177,18 @@ def login1(request):
         if link:
             return redirect("/"+link)
 
-        return redirect(reverse_lazy('dashboard'))
+        return redirect('/')
     return render(request,'dashboard/login.html')
 
 
 # function for logout
 def logout1(request):
         logout(request)
-        return redirect(reverse_lazy('login'))
+        link = request.get_full_path()
+        link = link.lstrip("/logout/?next=")
+        if link:
+            return redirect("/"+link)
+        return redirect('/')
 
 
 # Function for dashboard page

@@ -52,6 +52,8 @@ class Accounts(AbstractBaseUser,PermissionsMixin):
     date_of_birth = models.DateField(null=True,blank=True)
     gender = models.CharField(max_length=10, null=True,blank=True)
     image = models.ImageField(upload_to='profile',null=True,blank=True)
+    date_joined = models.DateField(auto_now=True)
+    address = models.CharField(default='Kabul',blank=True,max_length=200)
     is_staff = models.BooleanField(default=False)
 
     # Added this only because serializer it does not do anything it is just foor excluding in serializer 

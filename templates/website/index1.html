@@ -1,6 +1,37 @@
 
 {% extends 'base.html' %}
         
+{% block personalbar %} 
+<div id="SecBar_bg">
+    <div id="SecBar">
+
+
+        <div>
+            {% if not user.is_authenticated %}
+            <center>
+                  به وبسایت  تخصصی  هواداران  بارسلونا  در  افغانستان  خوش آمدید  برای  استفاده از  تمامی مزیت  های سایت " <a href="/login/?next=/"> ورود شوید  </a> " و یا " <a href="/accounts/register">ثبت نام</a> "  کنید
+            </center>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            <center>
+                - {{user.name}} - گرامی خوش آمدی ! - 
+                <span>
+                    <a href="/accounts/profile/{{user.id}}"> پنل کاربری </a> -
+                </span>
+                <span>
+                    <a href="/logout/?next=/"> خروج </a> 
+                </span>
+            </center>
+            {% endif %}
+        </div>
+
+        <br style="clear:both;" />
+
+
+    </div>
+</div>
+{% endblock personalbar %}
 
     {% block content %}
 

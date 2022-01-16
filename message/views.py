@@ -124,6 +124,6 @@ def conv(request,uid):
     except:
             new_conversation = Conversation.objects.create(person1_id=user,person2_id=receiver)
             new_conversation.save()
-            new_conversation = new_conversation
+            # new_conversation = new_conversation
             return redirect('/messages/{}'.format(new_conversation.id))
     

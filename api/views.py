@@ -84,6 +84,7 @@ def single_user_serializer(request,uid):
         user = User.objects.get(id=uid)
     except:
         raise NotFound
+        
     serializer = UserSerializer(user)
     if request.user.id == user.id:
         return Response(serializer.data,status=200)

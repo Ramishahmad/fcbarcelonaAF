@@ -1,6 +1,36 @@
 {% extends 'base.html' %}
 
+{% block personalbar %}
+<div id="SecBar_bg">
+    <div id="SecBar">
 
+
+        <div>
+            {% if not user.is_authenticated %}
+            <center>
+                  به وبسایت  تخصصی  هواداران  بارسلونا  در  افغانستان  خوش آمدید  برای  استفاده از  تمامی مزیت  های سایت " <a href="/login/?next=/post/{{post.id}}"> ورود شوید  </a> " و یا " <a href="/accounts/register">ثبت نام</a> "  کنید
+            </center>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            <center>
+                - {{user.name}} - گرامی خوش آمدی ! - 
+                <span>
+                    <a href="/accounts/profile/{{user.id}}"> پنل کاربری </a> -
+                </span>
+                <span>
+                    <a href="/logout/?next=/post/{{post.id}}"> خروج </a> 
+                </span>
+            </center>
+            {% endif %}
+        </div>
+
+        <br style="clear:both;" />
+
+
+    </div>
+</div>
+{% endblock personalbar %}
 {% block content %}
 
 {% include 'partials/slider.html' %}
@@ -165,10 +195,12 @@
             rows="3"></textarea>
         <button type="submit" class="btn btn-primary mt-2"> ارسال دیدگاه </button>
         <br>
-        <div class="alert alert-danger pb-0 collapse {{not_allowed}} mt-3 d-flex justify-content-center">
+        {% if not_allowed %}
+        <div class="alert alert-danger pb-0 mt-3 d-flex justify-content-center">
 
             <p> The word "{{ filtered_word }}" is not allowed </p>
         </div>
+        {% endif %}
     </form>
     {% else %}
     <p style="font-size: 1rem; display: flex; align-items: center; justify-content: center; color: chocolate;">

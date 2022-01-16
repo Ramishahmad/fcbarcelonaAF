@@ -3,10 +3,10 @@ from message.models import Conversation, Messages
 from mysite.models import (FilterComments, comments,comments_replays, 
                             logs, posts, slider)
 from django.contrib.auth import get_user_model
+from rest_framework import serializers
 
 User = get_user_model()
 
-from rest_framework import serializers
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -65,7 +65,8 @@ class LogsSerializer(serializers.ModelSerializer):
 
 
 class ConversationSerializer(serializers.ModelSerializer):
-
+    person1 = UserSerializer(read_only=True)
+    person2 = UserSerializer(read_only=True)
     class Meta:
         model = Conversation
         exclude = ['serializer']

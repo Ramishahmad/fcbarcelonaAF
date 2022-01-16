@@ -32,7 +32,10 @@
 				            </div>
                                                     </td>
                         <td class=" even middle" style="text-align:justify; padding:7px;">
-                            <input required placeholder="ایمیل آدرس" type='text' name='email' title=' ایمیل آدرس' id='email' size='35' maxlength='255' value='' />
+                            <input {% if email_exist %} style="border: red 3px solid;" {% endif %} required placeholder="ایمیل آدرس" type='text' name='email' title=' ایمیل آدرس' id='email' size='35' maxlength='255' value='' />
+                            {% if email_exist %}
+                            <span style="margin-right: 10px; color: rgb(212, 29, 29);"> این ایمیل در حال حاضر موجود است * </span>
+                            {% endif %} 
                         </td>
                                             </tr>
                                                                 <tr>
@@ -43,7 +46,7 @@
 				            </div>
                                                     </td>
                         <td class="odd middle" style="text-align:justify; padding:7px;">
-                            <input required placeholder="پسورد" type="password" name="pass" id="pass" size="35" maxlength="32" value=""  autocomplete="off"  />
+                            <input {% if invalid_password %} style="border: red 3px solid;" {% endif %} required placeholder="پسورد" type="password" name="pass" id="pass" size="35" maxlength="32" value=""  autocomplete="off"  />
                         </td>
                                             </tr>
                                                                 <tr>
@@ -54,7 +57,10 @@
 				            </div>
                                                     </td>
                         <td class=" even middle" style="text-align:justify; padding:7px;">
-                            <input required placeholder="تکرار پسورد" type="password" name="vpass" id="vpass" size="35" maxlength="32" value=""  autocomplete="off" />
+                            <input {% if invalid_password %} style="border: red 3px solid;" {% endif %}  required placeholder="تکرار پسورد" type="password" name="vpass" id="vpass" size="35" maxlength="32" value=""  autocomplete="off" />
+                            {% if invalid_password %}
+                            <span style="margin-right: 10px; color: rgb(212, 29, 29);">تکرار پسورد درست نمیباشد * </span>
+                            {% endif %}
                         </td>
                                             </tr>
                                                                 <tr>
@@ -65,7 +71,7 @@
 				            </div>
                                                     </td>
                         <td class=" even middle" style="text-align:justify; padding:7px;">
-                            <input  type="file" name="image" id="image"/>
+                            <input type="file" name="image" id="image"/>
                         </td>
                                             </tr>
 

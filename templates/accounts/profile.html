@@ -1,0 +1,73 @@
+{% extends 'base.html' %} 
+
+{%block content %}
+
+
+
+<div id="wide_bar_bg2">
+    <div id="wide_bar2">
+
+<div class="blockTitle shadowLittle"><center>پروفایل کاربر</center></div>
+<div class="blockContent DownRound shadowLittle">
+
+<span style="float:right; line-height:2;">
+        <h1>{{users.name}}</h1>
+        <br />
+</span>
+
+<img style="width: 25%; height: 25%;" src="{{users.image.url}}" title="{{users.name}}" class="avatar" align="left" />
+
+<br clear="all" /><br />
+
+<div style="padding:10px 0;">
+<center>
+        {% if user.is_authenticated %}
+        <form name="usernav" action="" method="post">
+        <input type="button" value="ارسال پیام" onclick="location='/messages/users/{{users.id}}'" />
+        </form>
+        {% endif %}
+</center>
+</div>
+
+                <table class="outer Yekan14" cellspacing="1" style="margin-top:10px;">
+                <tr>
+                  <th colspan="2">اطلاعات شخصی</th>
+                </tr>
+                                    <tr>
+                        <td class="head middle" style="padding:7px;" width="30%">نام مکمل</td>
+                        <td class="even middle" style="padding:5px 7px 5px 7px; line-height:2;">{{users.name}}</td>
+                    </tr>
+                                    <tr>
+                        <td class="head middle" style="padding:7px;" width="30%">ایمیل آدرس</td>
+                        <td class="even middle" style="padding:5px 7px 5px 7px; line-height:2;">{{users.email}}</td>
+                    </tr>
+                                    <tr>
+                        <td class="head middle" style="padding:7px;" width="30%">جنسیت </td>
+                        <td class="even middle" style="padding:5px 7px 5px 7px; line-height:2;">{% if users.gender == "Male" %} مذکر {% elif users.gender == 'Female' %}  مونث {% endif %}</td>
+                    </tr>
+                                    <tr>
+                        <td class="head middle" style="padding:7px;" width="30%">تاریخ تولد</td>
+                        <td class="odd middle" style="padding:5px 7px 5px 7px; line-height:2;">{{users.date_of_birth}}</td>
+                    </tr>
+                                    <tr>
+                        <td class="head middle" style="padding:7px;" width="30%">محل زندگی</td>
+                        <td class="even middle" style="padding:5px 7px 5px 7px; line-height:2;">{{users.address}}</td>
+                    </tr>
+                                    <tr>
+                        <td class="head middle" style="padding:7px;" width="30%"> تاریخ عضویت</td>
+                        <td class="odd middle" style="padding:5px 7px 5px 7px; line-height:2;">{{users.date_joined}}</td>
+                    </tr>
+                            </table>
+                    <table class="outer Yekan14" cellspacing="1" style="margin-top:10px;">
+                <tr>
+                  <th colspan="2"> معلومات دیگر </th>
+                </tr>
+                                    <tr>
+                        <td class="head middle" style="padding:7px;" width="30%"> ...... </td>
+                        <td class="even middle" style="padding:5px 7px 5px 7px; line-height:2;"> ...... </td>
+                    </tr>
+
+                            </table>
+</div>
+</div></div>
+{% endblock content %}
